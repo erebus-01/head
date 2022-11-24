@@ -13,10 +13,14 @@ module.exports = {
       'background-inverse': '#161616',
       'inverse': '#fff',
       'interactive': '#e01e3c',
+      'blue-primary': '#384484',
     },
     fontFamily: {
       'font-primary': ['neuzeit-grotesk','Helvetica Neue','Helvetica','sans-serif'],
       'font-secondary': ['alternate-gothic-no-2-d','Helvetica Neue','Helvetica','sans-serif'],
+    },
+    fontSize: {
+      'size-large': 'clamp(1.75rem, 2rem, 5vw)'
     }
   },
   plugins: [],

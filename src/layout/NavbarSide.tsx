@@ -8,7 +8,7 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import { Search, Cart } from '../svg';
+import { Cart } from '../svg';
 
 const NavbarSide = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -24,7 +24,7 @@ const NavbarSide = () => {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-normal text-lg"
+        className="p-1 font-normal text-[18px]"
       >
         <a href="/" className="relative flex items-center nav-link">
         DISCOVER
@@ -34,7 +34,7 @@ const NavbarSide = () => {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-normal text-lg"
+        className="p-1 font-normal text-[18px]"
       >
         <a href="/shop" className="relative flex items-center nav-link">
         SHOP
@@ -44,7 +44,7 @@ const NavbarSide = () => {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-normal text-lg"
+        className="p-1 font-normal text-[18px]"
       >
         <a href="/support" className="relative flex items-center nav-link">
         SUPPORT
@@ -77,7 +77,7 @@ const NavbarSide = () => {
             icon={<Cart />}
             linkTo='/aa'
           />
-          <ButtonBlack title="SHOP" />
+          <ButtonBlack title="Login" />
         </div>
         <IconButton
           variant="text"
