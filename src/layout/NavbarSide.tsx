@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Cart } from '../svg';
+import { Link } from 'react-router-dom';
 
 const NavbarSide = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -77,7 +78,9 @@ const NavbarSide = () => {
             icon={<Cart />}
             linkTo='/aa'
           />
-          <ButtonBlack title="Login" />
+          <Link to='/login'>
+            <ButtonBlack title="Login" />
+          </Link>
         </div>
         <IconButton
           variant="text"

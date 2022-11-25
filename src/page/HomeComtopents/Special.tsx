@@ -23,8 +23,8 @@ const Special = () => {
                         <div className="hero-copy bottom-left">
                           <div className="show-desktop">
                             <div className="font-updated">
-                              <h1 className="text-[min(80px,max(37px,5.55555vw+10px))] font-bold uppercase leading-[0.83] tracking-[-1px]">
-                                <span className="text-[1.25rem]">New Colors</span>
+                              <h1 className=" text-[min(80px,max(37px,5.55555vw+10px))] font-bold uppercase leading-[0.83] tracking-[-1px] ">
+                                <span className=" md:text-[1rem] text-[1.25rem]">New Colors</span>
                               </h1>
                               <picture className='tempClasstoTestParser'>
                                 <img src="https://www.beatsbydre.com/content/dam/beats/global/logos/kimk-logo.png.large.2x.png" className='max-w-[370px] mb-6' alt="" />

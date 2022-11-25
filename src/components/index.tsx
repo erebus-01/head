@@ -4,6 +4,8 @@ import ButtonWhite from "./ButtonWhite";
 import ButtonBlack from "./ButtonBlack";
 import ButtonTransparent from "./ButtonTransparent";
 import ButtonCart from "./ButtonCart";
+import InputText from "./InputText";
+import InputPass from "./InputPass";
 
 export {
   ButtonSearch,
@@ -11,5 +13,7 @@ export {
   ButtonWhite,
   ButtonBlack,
   ButtonTransparent,
-  ButtonCart
+  ButtonCart,
+  InputText,
+  InputPass
 }

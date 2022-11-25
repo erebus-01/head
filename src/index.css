@@ -1456,3 +1456,241 @@ a.card .card__content-bottom {
   background: linear-gradient(180deg, rgba(22,22,22,0) 55%, rgba(22,22,22,0.09989933473389356) 62%, rgba(22,22,22,1) 98%, rgba(22,22,22,1) 100%);
   z-index: 1;
 }
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.bbd-img-text-component.transition[data-full-module] .mobile-full-height-config .content-column:not(.content-md-full):not(.content-sm-full) .hero-copy {
+  padding: 50px 8.33333%;
+}}
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.mobile-full-height-config .transition-image-block .beats-picture img,
+.video-block img {
+  max-height: 650px;
+  min-height: 550px;
+  height: 100vh;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}}
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.bbd-img-text-component.transition[data-full-module] .mobile-full-height-config .content-column:not(.content-md-full):not(.content-sm-full) .hero-copy {
+  padding: 50px 8.33333%;
+}}
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.mobile-full-height-config .overlay-text-block {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  background: 0 0!important;
+}}
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.bbd-img-text-component.transition[data-full-module] .mobile-full-height-config .content-column:not(.content-md-full):not(.content-sm-full) {
+  padding: 0;
+}}
+
+@media screen and (max-width: 1023px){
+.bbd-img-text-component.transition[data-full-module] .content-column:not(.content-md-full):not(.content-sm-full) {
+  padding: 50px 8.33333% 0;
+}}
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.bbd-img-text-component.transition[data-full-module] .mobile-full-height-config .content-column:not(.content-md-full):not(.content-sm-full) .hero-copy {
+  padding: 50px 8.33333%;
+}}
+
+@media screen and (min-width: 0) and (max-width: 767px){
+.mobile-full-height-config.sticky-text .transition-content-wrapper.overlay-text-block .content-column div.hero-copy {
+  margin: auto auto 0 0;
+}}
+
+.bg-image {
+  background-image: url('./images/black/321b2842607567.57d16a489ce75.jpg');
+}
+
+.bg-signup-image {
+  background-image: url('./images/black/f7d79342607567.57d16a48a9b7f.jpg');
+}
+
+.grid-page-web {
+  padding: 2rem 7rem;
+  background-attachment: fixed;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #fff;
+}
+
+.field--animate {
+  -webkit-animation: 0.55s text-field-animate-in cubic-bezier(0.22, 0.68, 0, 1) backwards;
+  animation: 0.55s text-field-animate-in cubic-bezier(0.22, 0.68, 0, 1) backwards;
+}
+
+.field {
+  background: rgba(126,126,126,0.1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  color: #525252;
+  position: relative;
+  -webkit-transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(126,126,126,0.1);
+  border-radius: 4px;
+  background-clip: padding-box;
+  width: 100%;
+  margin-bottom: 1.496333981744725rem;
+  font-size: 2.102349244351339rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 100%;
+  padding: 0;
+}
+
+
+.field-border {
+  border-color: #030708;
+}
+
+
+.field__input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 100%;
+  flex: 1 0 100%;
+}
+
+.field__input--animate {
+  -webkit-animation: 0.8s text-field-text-animate-in cubic-bezier(0, 0, 0.58, 1) forwards;
+  animation: 0.8s text-field-text-animate-in cubic-bezier(0, 0, 0.58, 1) forwards;
+}
+
+
+
+.field__form-input {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 100%;
+  background: transparent;
+  line-height: 1.5em;
+  width: 100%;
+  outline: none;
+  border: 2px transparent;
+  height: 4rem;
+  padding: 1.8em 1.5rem 0.95em;
+  min-height: 4.325em;
+  display: block;
+  color: transparent;
+}
+
+
+
+@media screen and (min-width: 960px){
+.field__form-input {
+  padding: 1.2em 0.4rem 0.35em;
+  min-height: 3em;
+}}
+@media screen and (min-width: 960px){
+.field__form-input {
+  font-size: 1.5rem;
+  line-height:10%;
+}}
+
+.field__label {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  -webkit-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  top: 55%;
+  left: 1.6rem;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 100%;
+}
+
+.field__label {
+  opacity: 1;
+  -webkit-transform: translateY(-50%) scale(0.75);
+  transform: translateY(-50%) scale(0.75);
+}
+
+.field__placeholder {
+  opacity: 0;
+  left: 0;
+  top: 1.496333981744725rem;
+  font-size: 1rem;
+  position: absolute;
+  -webkit-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition-property: opacity, -webkit-transform;
+  transition-property: opacity, -webkit-transform;
+  transition-property: transform, opacity;
+  transition-property: transform, opacity, -webkit-transform;
+  -webkit-transform: scale(0.75);
+  transform: scale(0.75);
+  pointer-events: none;
+}
+
+@media screen and (min-width: 960px){
+.field__placeholder {
+  top: 0.1rem;
+  left: 0.4rem;
+}}
+
+
+.field__form-input[data-value='empty']:focus + .field__label {
+  opacity: 0;
+  -webkit-transform: scale(0.75);
+  transform: scale(0.75);
+}
+
+.field__form-input[data-value='value'] + .field__label {
+  opacity: 0;
+}
+
+.field__form-input[data-value='empty']:focus ~ .field__placeholder {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.field__form-input[data-value='value'] ~ .field__placeholder  {
+  opacity: 1;
+}
+
+.field__form-input[data-value='value'] {
+  color: #333;
+}
+
+.field__form-input:focus {
+  background-color: #fff;
+  color: #333;
+}
