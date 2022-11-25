@@ -49,9 +49,21 @@ nav {
   margin: 0px 10px;
 }
 
+.header-container {
+  max-width: 1440px;
+  height: inherit;
+  padding: 0 60px;
+  margin: 0 auto;
+  line-height: inherit;
+}
+
 .button-natural{
   display: inline-block;
   position: relative;
+}
+
+.header-container li {
+  font-family: alternate-gothic-no-2-d,Helvetica Neue,Helvetica,sans-serif;
 }
 
 @media screen and (min-width: 768px){
@@ -441,10 +453,10 @@ nav {
 .gr-icon:last-child {
   margin-right: 0px;
 }
-.gr-icon > * {
+/* .gr-icon > * {
   margin-left: 10px;
   margin-right: 10px;
-}
+} */
 
 @media screen and (min-width: 768px) {
   .global-footer {
@@ -1629,7 +1641,7 @@ a.card .card__content-bottom {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   top: 55%;
   left: 1.6rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1646,7 +1658,7 @@ a.card .card__content-bottom {
   opacity: 0;
   left: 0;
   top: 1.496333981744725rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   position: absolute;
   -webkit-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1694,3 +1706,5 @@ a.card .card__content-bottom {
   background-color: #fff;
   color: #333;
 }
+
+.st0{fill:#FFFFFF;}
