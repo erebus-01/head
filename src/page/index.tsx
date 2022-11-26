@@ -5,6 +5,7 @@ import PressRoom from "./PressRoom";
 import Register from "./Register";
 import Shop from "./Shop";
 import Support from "./Support";
+import Detail from "./Detail";
 
 export {
   Collaborations,
@@ -13,5 +14,6 @@ export {
   PressRoom,
   Register,
   Shop,
-  Support
+  Support,
+  Detail
 }

@@ -9,7 +9,8 @@ import {
   Shop,
   Support,
   Login,
-  Register
+  Register,
+  Detail
 } from './page'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/' element={ <Home/>} />
         <Route path='/shop' element={ <Shop />} />
         <Route path='/support' element={ <Support />} />
+        <Route path='/product' element={ <Detail />} />
         <Route path='/press_room' element={ <PressRoom />} />
         <Route path='/collaborations' element={ <Collaborations />} />
         <Route path='/signup' element={ <Register />} />

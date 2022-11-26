@@ -24,11 +24,11 @@ const NavbarSide = () => {
     <>
       <div className="header-container">
         <Navbar className="flex py-2 lg:py-4">
-          <ul className="w-full relative flex-[1_0_1px] mx-auto flex max-h-[80px] m-0 pl-[75px] items-center justify-center text-blue-gray-900">
+          <ul className="relative flex justify-center items-center flex-[1_0_1px] max-h-[80px] m-0 pl-[75px] text-[1.125px] text-blue-gray-900">
             <Typography
               as="li"
               variant="small"
-              className="cursor-pointer inline-block align-middle absolute left-0 font-normal"
+              className="cursor-pointer nav-item inline-block align-middle absolute left-0 font-normal"
             >
               <Link to='/'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none">
@@ -44,7 +44,7 @@ const NavbarSide = () => {
               as="li"
               variant="small"
               color="blue-gray"
-              className="p-1 font-normal text-[18px]"
+              className="p-1 font-normal nav-item text-[18px]"
             >
               <a href="/" className="relative flex items-center nav-link">
               DISCOVER
@@ -54,7 +54,7 @@ const NavbarSide = () => {
               as="li"
               variant="small"
               color="blue-gray"
-              className="p-1 font-normal text-[18px]"
+              className="p-1 font-normal nav-item text-[18px]"
             >
               <a href="/shop" className="relative flex items-center nav-link">
               SHOP
@@ -64,7 +64,7 @@ const NavbarSide = () => {
               as="li"
               variant="small"
               color="blue-gray"
-              className="p-1 font-normal text-[18px]"
+              className="p-1 font-normal nav-item text-[18px]"
             >
               <a href="/support" className="relative flex items-center nav-link">
               SUPPORT
@@ -72,7 +72,7 @@ const NavbarSide = () => {
             </Typography>
             <IconButton
               variant="text"
-              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+              className="ml-auto hidden h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
               ripple={false}
               onClick={() => setOpenNav(!openNav)}
             >
@@ -108,7 +108,7 @@ const NavbarSide = () => {
               )}
             </IconButton>
           </ul>
-          <div className='gr-icon flex gap-4 '>
+          <div className='gr-icon m-0 max-h[80px] flex justify-end items-center gap-5 '>
               <ButtonSearch />
               <ButtonCart
                 icon={<Cart />}
@@ -118,7 +118,7 @@ const NavbarSide = () => {
                 <ButtonBlack title="Login" />
               </Link>
             </div>
-          <MobileNav open={openNav}>
+          <MobileNav className='hidden' open={openNav}>
           <Typography
               as="li"
               variant="small"

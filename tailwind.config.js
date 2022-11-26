@@ -13,6 +13,7 @@ module.exports = {
       'background-inverse': '#161616',
       'inverse': '#fff',
       'interactive': '#e01e3c',
+      'red': '#e31837',
       'blue-primary': '#384484',
     },
     fontFamily: {

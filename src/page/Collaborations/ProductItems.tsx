@@ -1,7 +1,7 @@
 import React from 'react'
 import { ButtonBlack } from '../../components'
 
-const ProductList = () => {
+const ProductItems = () => {
   return (
     <div className='section'>
       <div className="bbd-component bbd-full-width-container id-ae5707b7-8f33-3479-8b7d-29d30bf6f428">
@@ -24,46 +24,23 @@ const ProductList = () => {
                           <div className="bbd-1X-image-text-block">
                             <div className="show-desktop">
                               <div className="font-updated">
-                                <div style={{color: '#e31837'}} className="text-red text-[1rem] font-bold leading-[1.13] uppercase mt-[9px]">$50 APPLE GIFT CARD*</div>
+                                <div style={{color: '#e31837'}} className="text-red text-[1rem] font-bold leading-[1.13] uppercase mt-[9px]">SOLD OUT</div>
                                 <div className="max-w-[390px] inline-block m-[4px_0_10px]">
                                   <p style={{color: '#161616'}} className="text-[min(38px,_max(28px,_0.845066vw_+_25.831px))] font-black tracking-[-1px] leading-[1.16] break-keep z-[1] m-0">
-                                    Beats Fit Pro
+                                    Melody Ehsani Powerbeats Pro
                                   </p>
                                 </div>
                                 <p className="mb-6 text-[1rem] tracking-[1.5] font-normal">
-                                  <span style={{color: '#161616'}} className="font-bold text-[1.275em] leading-[1.14] tracking-[-0.4px]">$199.99</span>
+                                  <span style={{color: '#161616'}} className="font-bold text-[1em] leading-[1.67] tracking-[-0.2px]">Release Date: November 2022</span>
                                 </p>
-                                <ul style={{color: '#161616'}} className="dot-li__pdp pl-[1.05em] tracking-[-0.2px] leading-[1.667] mb-[1.55em]">
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
-                                    Flexible, secure-fit wingtips
-                                  </li>
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
-                                    Active Noise Cancelling (ANC) and Transparency mode
-                                  </li>
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
-                                    Up to 6 hours of listening time with ANC on
-                                  </li>
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
-                                    Auto Play/Pause connection via Apple H1 chip
-                                  </li>
-                                </ul>
-                                <div className="flex items-center mb-[6px]" >
-                                  <span style={{color: '#161616'}} className="font-[0.9375em]">7 colors</span>
-                                  <ul className="">
-                                    <li className="bg-black rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                    <li className="bg-[#f7ede2] rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                    <li className="bg-[#6c6c6d] rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                    <li className="bg-[#e4ccee] rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                    <li className="bg-[#ecd1c4] rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                    <li className="bg-[#b37f66] rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                    <li className="bg-[#66423a] rounded-md w-[10px] h-[10px] inline-block ml-[13px]"></li>
-                                  </ul>
-                                </div>
+                                  <p style={{color: '#161616'}} className="font-[16px] leading-[1.67] tracking-[-0.2px] mb-1.55em">
+                                  Reclaim your personal space and teleport to another dimension in the new Powerbeats Pro by Melody Ehsani. The collaboration features colorful contrasting earbud designs and secret handwritten messages by the streetwear maven herself.
+                                  </p>
                               </div>
                             </div>
                             <div className="bbd-component beats-cta-container beats-cta-container--align-left">
                               <div className="button-container   ">
-                                <ButtonBlack title='View Details' />
+                                <ButtonBlack title='Shop powerbeats pro' />
                               </div>
                             </div>
                           </div>
@@ -84,4 +61,4 @@ const ProductList = () => {
   )
 }
 
-export default ProductList
+export default ProductItems

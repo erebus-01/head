@@ -2,6 +2,7 @@ import React from 'react'
 import ProductList from './ShopComponents/ProductList'
 import TitleType from './ShopComponents/TitleType'
 import Type from './ShopComponents/Type'
+import Holyday from './HomeComtopents/Holyday'
 
 const Shop = () => {
   return (
@@ -12,6 +13,13 @@ const Shop = () => {
             <Type />
             <TitleType />
             <ProductList />
+            <ProductList />
+            <ProductList />
+            <TitleType />
+            <ProductList />
+            <ProductList />
+            <ProductList />
+            <Holyday />
           </div>
         </div>
       </div>
