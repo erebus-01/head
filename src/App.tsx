@@ -10,8 +10,10 @@ import {
   Support,
   Login,
   Register,
-  Detail
+  Detail,
+  Cart
 } from './page'
+import Blog from './page/Blog';
 
 function App() {
   let location = useLocation();
@@ -22,6 +24,8 @@ function App() {
         <Route path='/' element={ <Home/>} />
         <Route path='/shop' element={ <Shop />} />
         <Route path='/support' element={ <Support />} />
+        <Route path='/cart' element={ <Cart />} />
+        <Route path='/blog' element={ <Blog />} />
         <Route path='/product' element={ <Detail />} />
         <Route path='/press_room' element={ <PressRoom />} />
         <Route path='/collaborations' element={ <Collaborations />} />

@@ -4,11 +4,11 @@ const Holyday = () => {
   return (
     <div className="section">
       <div className="bbd-component bbd-full-width-container id-9e828d28-79b2-33d2-bae9-ab4a1f20a854">
-        <div className="outer-container">
+        <div className=" md:w-[81%_!important] outer-container">
           <div className="content-container">
             <div>
               <div className="genericSpacing parbase section">
-                <section className="bbd-component generic-spacing spacing-8252e0f1-38fa-35e0-8d49-eef171a39bf8"></section>
+                <section className="bbd-component generic-spacing spacing-8252e0f1-38fa-35e0-8d49-eef171a39bf8 md:pt-[40px]"></section>
               </div>
               <div className="beatsRTE parbase section">
                 <section className="bbd-component bbd-rte-container">
@@ -22,11 +22,11 @@ const Holyday = () => {
                 </section>
               </div>
               <div className="genericSpacing parbase section">
-                <section className="bbd-component generic-spacing spacing-8252e0f1-38fa-35e0-8d49-eef171a39bf8"></section>
+                <section className="bbd-component generic-spacing spacing-8252e0f1-38fa-35e0-8d49-eef171a39bf8 md:pt-[40px]"></section>
               </div>
               <div className="beatsRTE parbase section">
                 <div className="rte-container-3b0c8f2c-cca1-33c4-860f-cc8fd904b4e9 beatsRTE-desktoptext component-section-spacing beatsRTE">
-                  <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-rows-[1fr_max-content] text-center gap-x-[clamp(2em,4.1em,5em)] tracking-[-1px]">
+                  <div className="grid_holiday grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-rows-[1fr_max-content] text-center gap-x-[clamp(2em,4.1em,5em)] tracking-[-1px]">
                     <div className="grid grid-rows-[4fr]">
                       <span>
                         <picture className='tempClasstoTestParser'>
@@ -65,8 +65,6 @@ const Holyday = () => {
                     </div>
                   </div>
                 </div>
-                <div className="rte-container-3b0c8f2c-cca1-33c4-860f-cc8fd904b4e9 beatsRTE-tablettext component-section-spacing beatsRTE"></div>
-                <div className="rte-container-3b0c8f2c-cca1-33c4-860f-cc8fd904b4e9 beatsRTE-mobiletext component-section-spacing beatsRTE"></div>
               </div>
               <div className="genericSpacing parbase section">
                 <section className="bbd-component generic-spacing spacing-8252e0f1-38fa-35e0-8d49-eef171a39bf8"></section>

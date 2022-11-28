@@ -1,7 +1,8 @@
 import React from "react";
 import { ButtonBlack } from "../../components";
 
-const TitleAndPrice = () => {
+const TitleAndPrice = (select: any) => {
+  console.log(select.select)
   return (
     <div className="section">
       <section className="bbd-component bbd-full-width-container id-c8b2564b-d503-3cb0-8419-e2ac0cd701d4">
@@ -55,7 +56,8 @@ const TitleAndPrice = () => {
                   </div>
                   <div className="product-header__cta lg:mb-[31px] inline-flex self-end items-center ml-[-20px] leading-[initial]">
                     <div
-                      className="hide cta__swatch bg-[#384484] w-8 h-8 rounded-[30px] ml-5"
+                      className={`hide cta__swatch w-8 h-8 rounded-[30px] ml-5`}
+                      style={{ backgroundColor: `${select.select}` }}
                       data-resp-exclude=""
                     ></div>
                     <div className="cta__price justify-center flex-col">

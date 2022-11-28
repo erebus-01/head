@@ -24,7 +24,7 @@ const Creators = () => {
               <div className="beatsRTE parbase section">
                 <section className="bbd-component bbd-rte-container">
                   <div className="rte-container-6e4fee15-4817-3dbc-8a03-e11d8003460c component-section-spacing beatsRTE">
-                    <div className="text-center text-inverse w-[81%] m-[1em_auto_0.5em] text-[1.5rem] leading-5">
+                    <div className="creator_text text-center text-inverse w-[81%] m-[1em_auto_0.5em] text-[1.5rem] leading-5">
                       <picture className='tempClasstoTestParser'>
                         <img src="https://www.beatsbydre.com/content/dam/beats/global/logos/blackcreators-logo.png.large.2x.png" width={340} className='inline-block mb-[15px]' alt="" />
                         <p className="text-[min(28px,_max(20px,_0.845066vw_+_10.831px))] leading-[1.2]">

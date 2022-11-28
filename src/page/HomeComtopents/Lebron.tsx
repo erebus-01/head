@@ -23,11 +23,11 @@ const Lebron = () => {
                       </div>
                     </div>
                     <div className="transition-content-wrapper overlay-text-block  beats-full-video-variant ">
-                      <div className="content-column  bottom-left-wrapper">
+                      <div className="content-column m-[0px_!important] bottom-left-wrapper">
                         <div className="hero-copy bottom-left">
                           <div className="show-desktop">
                             <div className="font-updated">
-                              <h1 className="text-[clamp(4rem,_5rem,_6rem)] mb-5 font-bold uppercase tracking-[-1px] leading-[0.83] relative left-[-4px]">LEBRON & BRONNY</h1>
+                              <h1 className="text-[40px] lg:text-[80px] mb-5 font-bold uppercase tracking-[-1px] leading-[0.83] relative left-[-4px] md:text-[64px] sm:text-[40px]">LEBRON & BRONNY</h1>
                               <p className="font-bold mb-[1em] text-[1.563em] leading-[1.38] tracking-[-1px] mt-[-10px]">Powered by Beats Fit Pro</p>
                             </div>
                           </div>

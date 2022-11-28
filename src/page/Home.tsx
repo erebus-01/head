@@ -17,7 +17,7 @@ const Home = () => {
               <div className="content-container">
                 <div>
                   <div className="genericSpacing parbase section">
-                    <section className="bbd-component generic-spacing spacing-d200156a-09d2-35e7-a562-3e0c651bd89c"></section>
+                    <section className="bbd-component generic-spacing spacing-d200156a-09d2-35e7-a562-3e0c651bd89c md:pt-[40px]"></section>
                   </div>
                   <div className="beatsRTE parbase section">
                     <section className="bbd-component bbd-rte-container">
@@ -31,7 +31,7 @@ const Home = () => {
                     </section>
                   </div>
                   <div className="genericSpacing parbase section">
-                    <section className="bbd-component generic-spacing spacing-d200156a-09d2-35e7-a562-3e0c651bd89c"></section>
+                    <section className="bbd-component generic-spacing spacing-d200156a-09d2-35e7-a562-3e0c651bd89c md:pt-[40px]"></section>
                   </div>
                   <div className="cardCarousel section">
                     <div

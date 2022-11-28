@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TitleAndPrice from "./TitleAndPrice";
 
 const data = [
   {
@@ -41,7 +42,7 @@ const data = [
 
 const RenderImage = (props: any) => {
   return (
-    <div className={`product-selector-image-holder ${props.selected === props.nameColor ? 'selected' : ''}`} >
+    <div className={`product-selector-image-holder ${props.selected === props.color ? 'selected' : ''}`} >
       <picture className="product-selector-picture">
         <img
           src={props.image}
@@ -56,10 +57,10 @@ const RenderImage = (props: any) => {
 const RenderColor = (props: any) => {
   return (
     <div
-      className={`product-selector-swatch-circle ${props.selected === props.nameColor ? 'selected' : ''} `}
+      className={`product-selector-swatch-circle ${props.selected === props.color ? 'selected' : ''} `}
       key={props.id}
       
-      onClick={() => props.setSelected(props.nameColor)}
+      onClick={() => props.setSelected(props.color)}
     >
       <div
         data-resp-exclude=""
@@ -73,64 +74,69 @@ const RenderColor = (props: any) => {
 const ImageColor = () => {
   const [selected, setSelected] = useState(null);
 
+  console.log(selected);
+
   // const toggleActive = (index: any) => {
   //   setSelected({idSelected: selected[index]})
   // }
 
   return (
-    <div className="section">
-      <section className="bbd-component bbd-full-width-container">
-        <div className="outer-container lg:w-full lg:max-w-[1440px]">
-          <div className="content-container">
-            <div>
-              <div className="productCarousel section">
-                <section className="bbd-component product-selector-component">
-                  <div className="product-selector-content-column">
-                    <div className="product-selector-image-container">
-                      <div className="product-selector-image-wrapper">
-                        {data.map((item, index) => {
-                          return <RenderImage id={index} image={item.img} nameColor={item.nameColor} selected={selected} />
-                        })}
+    <>
+      <TitleAndPrice select={selected} />
+      <div className="section">
+        <section className="bbd-component bbd-full-width-container">
+          <div className="outer-container lg:w-full lg:max-w-[1440px]">
+            <div className="content-container">
+              <div>
+                <div className="productCarousel section">
+                  <section className="bbd-component product-selector-component">
+                    <div className="product-selector-content-column">
+                      <div className="product-selector-image-container">
+                        <div className="product-selector-image-wrapper">
+                          {data.map((item, index) => {
+                            return <RenderImage id={index} image={item.img} color={item.color}  nameColor={item.nameColor} selected={selected} />
+                          })}
+                        </div>
                       </div>
-                    </div>
-                    <div className="product-selector-swatch">
-                      <div
-                        className="product-swatch flex justify-center flex-wrap m-[-10px_auto_0_auto] max-w-[calc(8_*_54px)]"
-                        role="radiogroup"
-                        aria-label="beats-studio-3-selection"
-                      >
-                        {data.map((item, index) => {
-                          return <RenderColor id={index} color={item.color} nameColor={item.nameColor} selected={selected} setSelected={setSelected} />;
-                        })}
-                      </div>
-                    </div>
-                    <div className="product-selector-details">
-                      <div
-                        style={{ color: "#161616" }}
-                        className="product-selector-details-wrapper"
-                      >
-                        <p
-                          className="product-selector-color product-selector-text mt-[7px] font-normal mb-0 tracking-[-0.2px] text-[20px] leading-[1px]"
-                          data-product-selector-variant=""
+                      <div className="product-selector-swatch">
+                        <div
+                          className="product-swatch flex justify-center flex-wrap m-[-10px_auto_0_auto] max-w-[calc(8_*_54px)]"
+                          role="radiogroup"
+                          aria-label="beats-studio-3-selection"
                         >
                           {data.map((item, index) => {
-                            if(selected === item.nameColor){
-                              return (
-                                item.nameColor
-                              )
-                            }
+                            return <RenderColor id={index} color={item.color} nameColor={item.nameColor} selected={selected} setSelected={setSelected} />;
                           })}
-                        </p>
+                        </div>
+                      </div>
+                      <div className="product-selector-details">
+                        <div
+                          style={{ color: "#161616" }}
+                          className="product-selector-details-wrapper"
+                        >
+                          <p
+                            className="product-selector-color product-selector-text mt-[7px] font-normal mb-0 tracking-[-0.2px] text-[20px] leading-[1px]"
+                            data-product-selector-variant=""
+                          >
+                            {data.map((item, index) => {
+                              if(selected === item.color){
+                                return (
+                                  item.nameColor
+                                )
+                              }
+                            })}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </section>
+                  </section>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 

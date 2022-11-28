@@ -4,6 +4,7 @@ import ButtonWhite from "./ButtonWhite";
 import ButtonBlack from "./ButtonBlack";
 import ButtonTransparent from "./ButtonTransparent";
 import ButtonCart from "./ButtonCart";
+import ButtonWhiteBlack from "./ButtonWhiteBlack";
 import InputText from "./InputText";
 import InputPass from "./InputPass";
 
@@ -15,5 +16,6 @@ export {
   ButtonTransparent,
   ButtonCart,
   InputText,
-  InputPass
+  InputPass,
+  ButtonWhiteBlack
 }

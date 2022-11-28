@@ -10,9 +10,11 @@ const ButtonCart: React.FC<Item> = ({icon, linkTo}) => {
   return (
     <div className="beats-button">
       <Link to = {linkTo}>
-        <button className='w-10 relative h-10 rounded-full flex justify-center items-center'>
+        <button className='w-10 relative h-10 md:w-5 md:h-5 rounded-full flex justify-center items-center'>
           {icon}
-          <div className="inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full bg-interactive text-inverse dark:border-gray-900">20</div>
+          <div className="inline-flex absolute -top-2 -right-2 md:w-5 md:h-5 justify-center items-center w-6 h-6 bg-red-500 rounded-full bg-interactive dark:border-gray-900">
+            <span className='text-inverse font-bold text-[1em] md:text-[0.75em]'>20</span>
+          </div>
         </button>
       </Link>
     </div>

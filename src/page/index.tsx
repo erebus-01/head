@@ -6,6 +6,7 @@ import Register from "./Register";
 import Shop from "./Shop";
 import Support from "./Support";
 import Detail from "./Detail";
+import Cart from "./Cart";
 
 export {
   Collaborations,
@@ -15,5 +16,6 @@ export {
   Register,
   Shop,
   Support,
-  Detail
+  Detail,
+  Cart
 }

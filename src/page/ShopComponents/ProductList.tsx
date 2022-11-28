@@ -34,16 +34,16 @@ const ProductList = () => {
                                   <span style={{color: '#161616'}} className="font-bold text-[1.275em] leading-[1.14] tracking-[-0.4px]">$199.99</span>
                                 </p>
                                 <ul style={{color: '#161616'}} className="dot-li__pdp pl-[1.05em] tracking-[-0.2px] leading-[1.667] mb-[1.55em]">
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
+                                  <li style={{color: '#161616'}} className="text-[0.9375em]">
                                     Flexible, secure-fit wingtips
                                   </li>
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
+                                  <li style={{color: '#161616'}} className="text-[0.9375em]">
                                     Active Noise Cancelling (ANC) and Transparency mode
                                   </li>
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
+                                  <li style={{color: '#161616'}} className="text-[0.9375em]">
                                     Up to 6 hours of listening time with ANC on
                                   </li>
-                                  <li style={{color: '#161616'}} className="font-[0.9375em]">
+                                  <li style={{color: '#161616'}} className="text-[0.9375em]">
                                     Auto Play/Pause connection via Apple H1 chip
                                   </li>
                                 </ul>
