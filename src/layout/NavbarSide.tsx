@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonSearch, ButtonCircleIcon, ButtonWhite, ButtonBlack, ButtonTransparent, ButtonCart } from '../components/index';
+import { ButtonSearch, ButtonCircleIcon, ButtonWhite, ButtonBlack, ButtonTransparent, ButtonCart, ButtonWhiteBlack } from '../components/index';
 import { useState, useEffect } from 'react'
 import {
   Navbar,
@@ -138,7 +138,7 @@ const NavbarSide = () => {
               linkTo='/cart'
             />
             <Link to='/login'>
-              <ButtonBlack title="Login" />
+              <ButtonWhiteBlack title="Login" />
             </Link>
           </div>
         </Navbar>
