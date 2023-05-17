@@ -26,7 +26,7 @@ function App() {
         <Route path='/support' element={ <Support />} />
         <Route path='/cart' element={ <Cart />} />
         <Route path='/blog' element={ <Blog />} />
-        <Route path='/product' element={ <Detail />} />
+        <Route path='/product/detail/:id' element={ <Detail />} />
         <Route path='/press_room' element={ <PressRoom />} />
         <Route path='/collaborations' element={ <Collaborations />} />
         <Route path='/signup' element={ <Register />} />

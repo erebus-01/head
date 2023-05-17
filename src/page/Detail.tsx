@@ -5,12 +5,14 @@ import Description from './DetailComponents/Description'
 import ImageColor from './DetailComponents/ImageColor'
 import ListSpecial from './DetailComponents/ListSpecial'
 import SpecialBuild from './DetailComponents/SpecialBuild'
+import { Promoba } from '../components'
 
 const Detail = () => {
   return (
     <div id="main">
       <div className="bs3">
         <div className="bs3-pdp">
+          <Promoba title="Choose two-hour courier or free delivery" />
           <ImageColor />
           <SpecialBuild />
           <ListSpecial />

@@ -23,13 +23,13 @@ const NavbarSide = () => {
   return (
     <>
       <div className="header-container">
-        <Navbar className="flex">
+        <Navbar className="flex border-0">
           <div className="screen-md w-full">
             <div className="">
               <ButtonCircleIcon 
               linkTo='/'
-                icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
               }
               />
@@ -41,9 +41,9 @@ const NavbarSide = () => {
                 className="cursor-pointer logo-header nav-item inline-block"
               >
                 <Link to='/'>
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 800 800" enable-background="new 0 0 800 800" xmlSpace="preserve">
-                    <path fill="#FFFFFF" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"/>
-                    <circle fill="#FFFFFF" stroke="#000000" stroke-width="100" stroke-miterlimit="10" cx="400" cy="400" r="138.7655"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 800 800" enableBackground="new 0 0 800 800" xmlSpace="preserve">
+                    <path fill="#FFFFFF" stroke="#000000" strokeWidth="60" strokeMiterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"/>
+                    <circle fill="#FFFFFF" stroke="#000000" strokeWidth="100" strokeMiterlimit="10" cx="400" cy="400" r="138.7655"/>
                   </svg>
                 </Link>
               </Typography>
@@ -57,9 +57,9 @@ const NavbarSide = () => {
               className="cursor-pointer logo-header nav-item inline-block align-middle absolute left-0 font-normal"
             >
               <Link to='/'>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 800 800" enable-background="new 0 0 800 800" xmlSpace="preserve">
-                  <path fill="#FFFFFF" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"/>
-                  <circle fill="#FFFFFF" stroke="#000000" stroke-width="100" stroke-miterlimit="10" cx="400" cy="400" r="138.7655"/>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 800 800" enableBackground="new 0 0 800 800" xmlSpace="preserve">
+                  <path fill="#FFFFFF" stroke="#000000" strokeWidth="60" strokeMiterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"/>
+                  <circle fill="#FFFFFF" stroke="#000000" strokeWidth="100" strokeMiterlimit="10" cx="400" cy="400" r="138.7655"/>
                 </svg>
               </Link>
             </Typography>

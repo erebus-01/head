@@ -7,6 +7,7 @@ import ButtonCart from "./ButtonCart";
 import ButtonWhiteBlack from "./ButtonWhiteBlack";
 import InputText from "./InputText";
 import InputPass from "./InputPass";
+import Promoba from './Promoba';
 
 export {
   ButtonSearch,
@@ -17,5 +18,6 @@ export {
   ButtonCart,
   InputText,
   InputPass,
-  ButtonWhiteBlack
+  ButtonWhiteBlack,
+  Promoba
 }

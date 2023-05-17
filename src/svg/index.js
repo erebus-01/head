@@ -6,6 +6,7 @@ import Youtube from "./Youtube";
 import Facebook from "./Facebook";
 import Instagram from "./Instagram";
 import Messages from "./Messages";
+import FullScreen from './FullScreen'
 
 export {
   Search,
@@ -15,5 +16,6 @@ export {
   Twitter,
   Youtube,
   Instagram,
-  Messages
+  Messages,
+  FullScreen
 }

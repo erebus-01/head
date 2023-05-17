@@ -12,23 +12,13 @@ const Shop = () => {
           <div>
             <Type />
             <TitleType />
-            {/* <div className="section">
-              <section className="bbd-component bbd-full-width-container id-ae5707b7-8f33-3479-8b7d-29d30bf6f428">
-                <div className="outer-container">
-                  <div className="content-container">
-                    <div> */}
-                      <ProductList />
-                      <ProductList />
-                      <ProductList />
-                    {/* </div>
-                  </div>
-                </div>
-              </section>
-            </div> */}
+            <ProductList />
+            {/* <ProductList />
+            <ProductList />
             <TitleType />
             <ProductList />
             <ProductList />
-            <ProductList />
+            <ProductList /> */}
             <Holyday />
           </div>
         </div>
