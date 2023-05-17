@@ -26,14 +26,14 @@ const Footer = () => {
                   fill="#FFFFFF"
                   stroke="#000000"
                   strokeWidth="60"
-                  stroke-miterlimit="10"
+                  strokeMiterlimit="10"
                   d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"
                 />
                 <circle
                   fill="#FFFFFF"
                   stroke="#000000"
                   strokeWidth="100"
-                  stroke-miterlimit="10"
+                  strokeMiterlimit="10"
                   cx="400"
                   cy="400"
                   r="138.7655"

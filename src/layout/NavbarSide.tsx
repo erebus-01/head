@@ -1,6 +1,7 @@
 import React from 'react'
 import { ButtonSearch, ButtonCircleIcon, ButtonWhite, ButtonBlack, ButtonTransparent, ButtonCart, ButtonWhiteBlack } from '../components/index';
 import { useState, useEffect } from 'react'
+import axios from 'axios';
 import {
   Navbar,
   MobileNav,
@@ -10,6 +11,22 @@ import {
 } from "@material-tailwind/react";
 import { Cart } from '../svg';
 import { Link } from 'react-router-dom';
+import { escape } from 'querystring';
+
+interface SessionData {
+  json: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    verify: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+}
+
 
 const NavbarSide = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -20,18 +37,33 @@ const NavbarSide = () => {
     );
   }, []);
 
+  const [sessionData, setSessionData] = useState<SessionData | null>(null);
+
+  useEffect(() => {
+    const storedDataToken = localStorage.getItem('dataToken');
+    if (storedDataToken !== null) {
+      const parsedDataToken = JSON.parse(storedDataToken) as SessionData;
+      setSessionData(parsedDataToken);
+    } else {
+      setSessionData(null);
+    }
+  }, []);
+
+
+  console.log(sessionData);
+
   return (
     <>
       <div className="header-container">
         <Navbar className="flex border-0">
           <div className="screen-md w-full">
             <div className="">
-              <ButtonCircleIcon 
-              linkTo='/'
+              <ButtonCircleIcon
+                linkTo='/'
                 icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-              }
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+                }
               />
             </div>
             <div className="">
@@ -42,8 +74,8 @@ const NavbarSide = () => {
               >
                 <Link to='/'>
                   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 800 800" enableBackground="new 0 0 800 800" xmlSpace="preserve">
-                    <path fill="#FFFFFF" stroke="#000000" strokeWidth="60" strokeMiterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"/>
-                    <circle fill="#FFFFFF" stroke="#000000" strokeWidth="100" strokeMiterlimit="10" cx="400" cy="400" r="138.7655"/>
+                    <path fill="#FFFFFF" stroke="#000000" strokeWidth="60" strokeMiterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z" />
+                    <circle fill="#FFFFFF" stroke="#000000" strokeWidth="100" strokeMiterlimit="10" cx="400" cy="400" r="138.7655" />
                   </svg>
                 </Link>
               </Typography>
@@ -58,8 +90,8 @@ const NavbarSide = () => {
             >
               <Link to='/'>
                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 800 800" enableBackground="new 0 0 800 800" xmlSpace="preserve">
-                  <path fill="#FFFFFF" stroke="#000000" strokeWidth="60" strokeMiterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z"/>
-                  <circle fill="#FFFFFF" stroke="#000000" strokeWidth="100" strokeMiterlimit="10" cx="400" cy="400" r="138.7655"/>
+                  <path fill="#FFFFFF" stroke="#000000" strokeWidth="60" strokeMiterlimit="10" d="M766.617,769.3405H32.6596  c-1.5041,0-2.7234-1.2194-2.7234-2.7234V32.6596c0-1.5041,1.2193-2.7234,2.7234-2.7234H766.617  c1.5041,0,2.7234,1.2193,2.7234,2.7234V766.617C769.3405,768.1211,768.1211,769.3405,766.617,769.3405z" />
+                  <circle fill="#FFFFFF" stroke="#000000" strokeWidth="100" strokeMiterlimit="10" cx="400" cy="400" r="138.7655" />
                 </svg>
               </Link>
             </Typography>
@@ -70,7 +102,7 @@ const NavbarSide = () => {
               className="p-1 font-normal nav-item text-[18px]"
             >
               <a href="/" className="relative flex items-center nav-link">
-              DISCOVER
+                DISCOVER
               </a>
             </Typography>
             <Typography
@@ -80,7 +112,7 @@ const NavbarSide = () => {
               className="p-1 font-normal nav-item text-[18px]"
             >
               <a href="/shop" className="relative flex items-center nav-link">
-              SHOP
+                SHOP
               </a>
             </Typography>
             <Typography
@@ -90,7 +122,7 @@ const NavbarSide = () => {
               className="p-1 font-normal nav-item text-[18px]"
             >
               <a href="/support" className="relative flex items-center nav-link">
-              SUPPORT
+                SUPPORT
               </a>
             </Typography>
             <IconButton
@@ -137,9 +169,14 @@ const NavbarSide = () => {
               icon={<Cart />}
               linkTo='/cart'
             />
-            <Link to='/login'>
-              <ButtonWhiteBlack title="Login" />
-            </Link>
+            {sessionData !== null ? (
+              <ButtonWhiteBlack title={sessionData.json.username} />
+            ) : (
+              <Link to="/login">
+                <ButtonWhiteBlack title="Login" />
+              </Link>
+            )}
+
           </div>
         </Navbar>
       </div>

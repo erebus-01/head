@@ -1,40 +1,37 @@
 import React, { useState } from "react";
 
 interface PassItem {
-  label: string,
-  name: string
+  label: string;
+  name: string;
+  form: { [key: string]: string };
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputPass:React.FC<PassItem> = ({label, name}) => {
-  const [countPass, setCountPass] = useState("");
+const InputPass:React.FC<PassItem> = ({label, name, form, onChange}) => {
   const [pass, setPass] = useState(false);
-  const [onPassFocus, setOnPassFocus] = useState(false);
 
-  const handleCountPass = (event: any) => {
-    setCountPass(event.target.value);
-  };
+  const onUserFocus = form[name] !== '';
 
   const handleShowPass = () => {
     setPass(!pass);
   };
-  const handleOnPassFocus = () => {
-    setOnPassFocus(!onPassFocus);
-  };
+
   return (
     <div
-      className={`field ${!onPassFocus ? "" : "field-border"} field-animate`}
+      className={`field ${!onUserFocus ? "" : "field-border"} field-animate`}
     >
       <div className="field__input field__input--animate">
         <input
           type={`${!pass ? "password" : "text"}`}
           className="tracking-tighter field__form-input text__ignore-subset"
-          onBlur={handleOnPassFocus}
-          onFocus={handleOnPassFocus}
-          onChange={handleCountPass}
+          onBlur={onChange}
+          onFocus={onChange}
+          onChange={onChange}
           name={name}
           autoCapitalize="off"
-          id=""
-          data-value={`${countPass !== "" ? "value" : "empty"}`}
+          id={name}
+          value={form[name]}
+          data-value={`${form[name] !== '' ? 'value' : 'empty'}`}
         />
         <label htmlFor="" className="field__label">
           {label}

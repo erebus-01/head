@@ -2,45 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import TitleAndPrice from "./TitleAndPrice";
 import { FullScreen } from '../../svg';
 
-const data = [
-  {
-    index: "1",
-    img: "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/studio-buds/pdp/studiobuds-blue-pdp-p01.jpg.large.2x.jpg",
-    color: "#384484",
-    nameColor: "Ocean Blue",
-  },
-  {
-    index: "2",
-    img: "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/studio-buds/pdp/studiobuds-gray-pdp-p01.jpg.large.2x.jpg",
-    color: "#a4a4a4",
-    nameColor: "Moon Gray",
-  },
-  {
-    index: "3",
-    img: "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/studio-buds/pdp/studiobuds-pink-pdp-p01.jpg.large.2x.jpg",
-    color: "#f4cce4",
-    nameColor: "SunsetPink",
-  },
-  {
-    index: "4",
-    img: "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/studio-buds/pdp/studiobuds-pdp-p01-black.jpg.large.2x.jpg",
-    color: "#2b2b2b",
-    nameColor: "Black",
-  },
-  {
-    index: "5",
-    img: "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/studio-buds/pdp/studiobuds-pdp-p01-white.jpg.large.2x.jpg",
-    color: "#d0d1d3",
-    nameColor: "White",
-  },
-  {
-    index: "6",
-    img: "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/studio-buds/pdp/studiobuds-pdp-p01-red.jpg.large.2x.jpg",
-    color: "#b10311",
-    nameColor: "Beats Red",
-  },
-];
-
 const DataSlides = [
   {
     index: "1",
@@ -95,114 +56,61 @@ const DataSlides = [
     nameColor: "Beats Black",
   },
 ];
+interface ImageColorProps {
+  product: any;
+  sendColor: any;
+}
 
-const RenderImage = (props: any) => {
-  return (
-    <div className={`product-selector-image-holder ${props.selected === props.color ? 'selected' : ''}`} >
-      <picture className="product-selector-picture">
-        <img
-          src={props.image}
-          alt=""
-          className=""
-        />
-      </picture>
-    </div>
-  );
-};
+interface Product {
+  _id: string;
+  name: string;
+  subtitles: string;
+  image: string;
+  description: string[];
+  benefit: string[];
+  price: number;
+  colors: Color[];
+}
 
-const RenderColor = (props: any) => {
-  return (
-    <div
-      className={`product-selector-swatch-circle ${props.selected === props.color ? 'selected' : ''} `}
-      key={props.id}
-      
-      onClick={() => props.setSelected(props.color)}
-    >
-      <div
-        data-resp-exclude=""
-        className="swatch-circle-content"
-        style={{ backgroundColor: `${props.color}` }}
-      ></div>
-    </div>
-  );
-};
+interface Color {
+  _id: string;
+  name: string;
+  color: string;
+  images: string[];
+  product: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
-const ImageColor = () => {
+const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
   const [selected, setSelected] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState(0);
-  const [colorChecked, setColorChecked] = useState(DataSlides[0].nameColor);
+  const [selectFirst, setSelectFirst] = useState('');
+  const [colorChecked, setColorChecked] = useState(product[0]?.colors[0]?.name);
+  const [colorsData, setColorsData] = useState<Color[]>([]);
 
-  const goToSlide = (index: any) => {
-    setActiveIndex(index);
-  }
 
-  const goToImage = (index: any) => {
-    setModalImage(index);
-  }
-  const nextSlide = () => {
-    setModalImage((modalImage + 1) % 6);
-  }
+  useEffect(() => {
+    product.map((product: Product) => {
+      setColorsData(product.colors);
+      setSelectFirst(product.colors[0].name)
+    })
+  });
 
-  const prevSlide = () => {
-    setModalImage((modalImage - 1 + 6) % 6);
-  }
+  
 
-  const checkedColor = (nameColor: any) => {
-    setColorChecked(nameColor);
-  }
-
-  const openModal = () => {
-    setShowModal(true);
-  }
-  const closeModal = () => {
-    setShowModal(false);
-  }
-
-  const CarouselMain = (slides: any) => {
-    return (
-      <div className="product-carousel product-carousel--base ">
-        {/* left */}
-        <div className="product-carousel__list">
-          <div className="product-carousel__list__items">
-            <ul className="product-carousel__list__items__inner">
-              {slides.slice(0, -1).map((slide: any, index: any) => (
-                <li role="presentation" key={slide.index} className={`product-thumbnail ${index === activeIndex ? '    product-thumbnail--selected' : ''} `}>
-                  <button type="button" onClick={() => goToSlide(index)} >
-                    <img src={slide.img} alt={slides[slides.length - 1].nameColor} />
-                  </button>
-                </li>
-              ))}
-              <li role="presentation" className="product-thumbnail extra-thumbnail">
-                <button type="button" onClick={() => openModal()}>
-                  <img src={slides[slides.length - 1].img} alt={slides[slides.length - 1].nameColor} />
-                </button>
-                <span  onClick={() => openModal()} style={{cursor: 'pointer'}}>+ 1 </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        {/* main */}
-        <div className="product-carousel__main">
-          <div className="product-main__inner">
-            <div className="product-image product-image--overlay">
-              <div className="image-block">
-                <picture className="beats-picture" onClick={() => openModal()} style={{cursor: "pointer"}}>
-                  <img src={slides[activeIndex].img} alt="" />
-                </picture>
-              </div>
-            </div>
-          </div>
-          <div className="product-image__disclaimer">
-            Press image to open expanded view 
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const filteredDataSlides = DataSlides.filter((slide) => slide.nameColor === colorChecked);
+  const goToSlide = (index: any) => setActiveIndex(index);
+  const goToImage = (index: any) => setModalImage(index);
+  const nextSlide = () => setModalImage((modalImage + 1) % 6);
+  const prevSlide = () => setModalImage((modalImage - 1 + 6) % 6);
+  const checkedColor = (nameColor: any) => setColorChecked(nameColor);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+  
+  const filteredDataSlides = colorsData.filter((slide) => slide.name === colorChecked);
 
   return (
     <>
@@ -212,10 +120,9 @@ const ImageColor = () => {
           <div className="outer-container lg:w-full lg:max-w-[1440px]">
             <div className="content-container">
               <div>
-
-              <div className="genericSpacing parbase section">
-                <section className="bbd-component generic-spacing spacing-59618323-d268-3a08-b832-5b1870532186"></section>
-              </div>
+                <div className="genericSpacing parbase section">
+                  <section className="bbd-component generic-spacing spacing-59618323-d268-3a08-b832-5b1870532186"></section>
+                </div>
 
                 <div className="section">
                   <div className="productCarouselV2">
@@ -224,54 +131,54 @@ const ImageColor = () => {
                         <div className="product-carousel-el">
                           {/* carousel */}
                           <div className="product-carousel product-carousel--base ">
-                          {/* left */}
-                          <div className="product-carousel__list">
-                            <div className="product-carousel__list__items">
-                              <ul className="product-carousel__list__items__inner">
-                                {filteredDataSlides.map((data, index) => (
-                                  <>
-                                    {data.img.slice(0, -1).map((img, index) => (
-                                      <li role="presentation" key={index} className={`product-thumbnail ${index === activeIndex ? '    product-thumbnail--selected' : ''} `}>
-                                        <button type="button" onClick={() => goToSlide(index)} >
-                                          <img src={img} alt={DataSlides[DataSlides.length - 1].nameColor} />
-                                        </button>
-                                      </li>
-                                    ))}
-                                  </>
-                                ))}
-                                <li role="presentation" className="product-thumbnail extra-thumbnail">
-                                  <button type="button" onClick={() => openModal()}>
-                                    {filteredDataSlides.map((data, index) => (
-                                      <img src={data.img[data.img.length - 1]} alt={data.nameColor} />
-                                    ))}
-                                  </button>
-                                  <span  onClick={() => openModal()} style={{cursor: 'pointer'}}>+ 1 </span>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          {/* main */}
-                          <div className="product-carousel__main">
-                            <div className="product-main__inner">
-                              <div className="product-image product-image--overlay">
-                                <div className="image-block">
-                                  <picture className="beats-picture" onClick={() => openModal()} style={{cursor: "pointer"}}>
-                                    {filteredDataSlides.map((data, index) => (
-                                      <img src={data.img[activeIndex]} alt="" />
-                                    ))}
-                                  </picture>
-                                </div>
+                            {/* left */}
+                            <div className="product-carousel__list">
+                              <div className="product-carousel__list__items">
+                                <ul className="product-carousel__list__items__inner">
+                                  {filteredDataSlides.map((data, index) => (
+                                    <>
+                                      {data.images.slice(0, -1).map((img, index) => (
+                                        <li role="presentation" key={index} className={`product-thumbnail ${index === activeIndex ? '    product-thumbnail--selected' : ''} `}>
+                                          <button type="button" onClick={() => goToSlide(index)} >
+                                            <img src={img} alt={DataSlides[DataSlides.length - 1].nameColor} />
+                                          </button>
+                                        </li>
+                                      ))}
+                                    </>
+                                  ))}
+                                  <li role="presentation" className="product-thumbnail extra-thumbnail">
+                                    <button type="button" onClick={() => openModal()}>
+                                      {filteredDataSlides.map((data, index) => (
+                                        <img src={data.images[data.images.length - 1]} key={index} alt={data.name} />
+                                      ))}
+                                    </button>
+                                    <span onClick={() => openModal()} style={{ cursor: 'pointer' }}>+ 1 </span>
+                                  </li>
+                                </ul>
                               </div>
                             </div>
-                            <div className="product-image__disclaimer">
-                              Press image to open expanded view 
-                              <FullScreen />
+                            {/* main */}
+                            <div className="product-carousel__main">
+                              <div className="product-main__inner">
+                                <div className="product-image product-image--overlay">
+                                  <div className="image-block">
+                                    <picture className="beats-picture" onClick={() => openModal()} style={{ cursor: "pointer" }}>
+                                      {filteredDataSlides.map((data, index) => (
+                                        <img src={data.images[activeIndex]} alt="" key={index} />
+                                      ))}
+                                    </picture>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="product-image__disclaimer">
+                                Press image to open expanded view
+                                <FullScreen />
+                              </div>
                             </div>
                           </div>
-                        </div>
                           {/* carousel fullscreen */}
-                          <div className={`overlay ${ showModal ? 'active' : '' } `}></div>
-                          <div className={`product-carousel_modal ${ showModal ? 'active' : '' } `}>
+                          <div className={`overlay ${showModal ? 'active' : ''} `}></div>
+                          <div className={`product-carousel_modal ${showModal ? 'active' : ''} `}>
                             <div className="product-carousel">
                               <div className="product-carousel__main">
                                 {/* prev */}
@@ -287,9 +194,9 @@ const ImageColor = () => {
                                     ">
                                     <div className="image-block">
                                       {filteredDataSlides.map((data, index) => (
-                                        <img 
-                                        style={{transform: 'scale(1) translateX(0px) translateY(0px)'}}
-                                        src={data.img[modalImage]} alt="" />
+                                        <img
+                                          style={{ transform: 'scale(1) translateX(0px) translateY(0px)' }}
+                                          src={data.images[modalImage]} alt="" key={index} />
                                       ))}
                                     </div>
                                   </div>
@@ -308,17 +215,17 @@ const ImageColor = () => {
                                   <ul className="product-carousel__list__items__inner">
                                     {filteredDataSlides.map((data, index) => (
                                       <>
-                                          {data.img.map((img, index) => (
-                                            data.nameColor === colorChecked && (
-                                              <> 
-                                                <li role="presentation" key={data.index} className={`product-thumbnail ${index === modalImage ? 'product-thumbnail--selected' : ''} `}>
-                                                  <button type="button" role="tab" onClick={() => goToImage(index)} tabIndex={0} data-index="0" data-product-image-thumbnail="true" aria-label="Select Thumbnail">
-                                                    <img src={img} alt={data.nameColor} />
-                                                  </button>
-                                                </li>
-                                              </>
-                                            )
-                                          ))}
+                                        {data.images.map((img, index) => (
+                                          data.name === colorChecked && (
+                                            <>
+                                              <li role="presentation" key={data._id} className={`product-thumbnail ${index === modalImage ? 'product-thumbnail--selected' : ''} `}>
+                                                <button type="button" role="tab" onClick={() => goToImage(index)} tabIndex={0} data-index="0" data-product-image-thumbnail="true" aria-label="Select Thumbnail">
+                                                  <img src={img} alt={data.name} />
+                                                </button>
+                                              </li>
+                                            </>
+                                          )
+                                        ))}
                                       </>
                                     ))}
                                   </ul>
@@ -336,16 +243,16 @@ const ImageColor = () => {
                       <div className="product-main__head">
                         <span className="product-detail__eyebrow"></span>
                         <h1 className="product-detail__title">
-                          <p>Beats Fit Pro</p>
+                          <p>{product[0]?.name}</p>
                         </h1>
                         <div className="product-detail__description">
-                          <p>True Wireless Noise Cancelling Earbuds</p>
+                          <p>{product[0]?.subtitles}</p>
                         </div>
                       </div>
                       <div className="product-main__content">
                         <div className="product-detail">
                           <div className="product-detail__price">
-                            <span className="price">$199.99</span>
+                            <span className="price">${product[0]?.price}</span>
                           </div>
                           <div className="product-selector-el">
                             <fieldset className="product-selector new">
@@ -353,20 +260,20 @@ const ImageColor = () => {
                                 <div className="product-swatch__selected-collection"></div>
                                 <span>Color:</span>
                                 {filteredDataSlides.map((data, index) => (
-                                  <strong>{data.nameColor}</strong>
+                                  <strong key={index}>{data.name}</strong>
                                 ))}
                               </legend>
                               <div>
                                 <ul className="product-swatches">
-                                  {DataSlides.map((color, index) => (
-                                    <li>
-                                      <input type="radio" name="color"  id="" />
-                                      <label 
-                                        onClick={() => checkedColor(color.nameColor)} 
-                                        className={`product-swatch ${color.nameColor === colorChecked ? " product-swatch--selected" : ''} `} 
+                                  {colorsData.map((color, index) => (
+                                    <li key={index}>
+                                      <input type="radio" name="color" id="" />
+                                      <label
+                                        onClick={() => checkedColor(color.name)}
+                                        className={`product-swatch ${color.name === colorChecked ? " product-swatch--selected" : ''} `}
                                       >
-                                        <span className="product-swatch__inner" style={{backgroundColor: color.color }}></span>
-                                        </label>
+                                        <span className="product-swatch__inner" style={{ backgroundColor: color.color }}></span>
+                                      </label>
                                     </li>
                                   ))}
                                 </ul>
@@ -375,11 +282,14 @@ const ImageColor = () => {
                           </div>
                           <div className="product-detail__cta">
                             <div>
-                              <div className="beats-button" style={{display: "block"}}>
-                                <a  className='beats-btn btn-black w-full beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
-                                  <span className="beats-btn-inner">ADD TO CART</span>
-                                  <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
-                                </a>
+                              <div className="beats-button" style={{ display: "block" }}>
+                                <form>
+                                  <input type="text" value={product[0]?._id} />
+                                  <button className='beats-btn btn-black w-full beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
+                                    <span className="beats-btn-inner">ADD TO CART</span>
+                                    <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
+                                  </button>
+                                </form>
                               </div>
                               <p className="b-button__secondary-cta"></p>
                             </div>
@@ -393,7 +303,7 @@ const ImageColor = () => {
                                 <div>
                                   <h2 className="value-prop__title">Free shipping and returns</h2>
                                   <p className="value-prop__description">
-								                    Enjoy free 2-day delivery and 14-day returns.
+                                    Enjoy free 2-day delivery and 14-day returns.
                                   </p>
                                 </div>
                               </li>
@@ -433,7 +343,7 @@ const ImageColor = () => {
 
                   </section>
                 </div>
-              
+
 
 
                 {/* <div className="productCarousel section">
