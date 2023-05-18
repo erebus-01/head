@@ -59,7 +59,7 @@ const Detail = () => {
   }, []);
 
   useEffect(() => {
-    const delay = 1000;
+    const delay = 2000;
 
     const timer = setTimeout(() => {
       setShowComponent(true);
@@ -67,9 +67,6 @@ const Detail = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
-
-  console.log(sendId)
 
   return (
     <div id="main">

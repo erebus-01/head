@@ -1,7 +1,27 @@
 import React from "react";
 import { ButtonBlack, ButtonWhiteBlack } from "../../components";
 
-const TotalPrice = () => {
+interface PropsPrice {
+  totalPrice: any;
+}
+
+const TotalPrice: React.FC<PropsPrice> = ({ totalPrice }) => {
+
+  const fax = totalPrice * 0.05
+  const all = totalPrice + fax
+
+  const handleCheckout = async (e: any) => {
+    e.preventDefault()
+    const response = await fetch('http://localhost:5000/checkout_vnpay', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await response.json()
+    console.log(data)
+  }
+
   return (
     <div className="rs-summary mt-0">
       <div className="large-9 large-offset-3 small-12 small-offset-0">
@@ -17,7 +37,7 @@ const TotalPrice = () => {
               className="rs-summary-value"
               data-autom="bagrs-summary-subtotalvalue"
             >
-              $1,919.74
+              ${totalPrice.toFixed(2)}
             </div>
           </div>
         </div>
@@ -53,7 +73,7 @@ const TotalPrice = () => {
               className="rs-summary-value"
               data-autom="bagrs-summary-taxvalue"
             >
-              $ –
+              $ {fax.toFixed(2)}
             </div>
           </div>
         </div>
@@ -62,12 +82,24 @@ const TotalPrice = () => {
             Total
           </div>
           <div className="rs-summary-value" data-autom="bagtotalvalue">
-            $1,919.74
+            ${all.toFixed(2)}
           </div>
         </div>
         <div className="rs-summary-content float-right flex gap-4 pt-7 button-container   ">
-          <ButtonBlack title="checkout" />
-          <ButtonWhiteBlack title="Payment online" />
+          <form onSubmit={handleCheckout}>
+            <div className="beats-button">
+              <button className='beats-btn btn-black beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
+                <span className="beats-btn-inner">Checkout</span>
+                <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
+              </button>
+            </div>
+            <div className="beats-button" style={{marginLeft: '20px'}}>
+              <button type="submit" className='beats-btn btn-light beats-btn--button beats-btn--authored font-font-secondary border_btn-white ' data-color="black" >
+                <span className="beats-btn-inner text-text-primary">Payment online</span>
+                <span className="beats-btn-mask btn2-bg-hover-color-black"></span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

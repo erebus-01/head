@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Footer, NavbarSide } from './layout'
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import {ChatBot} from './components/ChatBot'
 import {
   Collaborations,
   Home,
@@ -19,6 +20,7 @@ function App() {
   let location = useLocation();
   return (
     <>
+      <ChatBot />
       {location.pathname !== '/login' && location.pathname !== '/signup' && <NavbarSide />}
       <Routes >
         <Route path='/' element={ <Home/>} />

@@ -45,7 +45,6 @@ const Login = () => {
 
   const handleSubmitLogin = async (e: any) => {
     e.preventDefault()
-    console.log(form)
     const response = await fetch('http://localhost:5000/user/login', {
       method: 'POST',
       body: JSON.stringify(form),
@@ -64,8 +63,9 @@ const Login = () => {
         }
       })
       const dataToken = await responseToken.json();
+      console.log(dataToken.json._id);
+      localStorage.setItem('userId', dataToken.json._id);
       localStorage.setItem('dataToken', JSON.stringify(dataToken));
-      console.log(dataToken);
       navigate('/')
     }
   }

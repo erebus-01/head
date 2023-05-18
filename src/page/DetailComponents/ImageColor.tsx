@@ -2,60 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import TitleAndPrice from "./TitleAndPrice";
 import { FullScreen } from '../../svg';
 
-const DataSlides = [
-  {
-    index: "1",
-    img: [
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/tidal-blue/pc-fit-pro-tidal-blue-case-closed-floating.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/tidal-blue/pc-fit-pro-tidal-blue-earbuds-inside-outside.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/tidal-blue/pc-fit-pro-tidal-blue-earbuds-b-logo.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/tidal-blue/pc-fit-pro-tidal-blue-case-open.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/tidal-blue/pc-fit-pro-tidal-blue-case-closed-front.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/tidal-blue/pc-fit-pro-tidal-blue-unboxed.jpg",
-    ],
-    color: "#384484",
-    nameColor: "Ocean Blue",
-  },
-  {
-    index: "2",
-    img: [
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/coral-pink/pc-fit-pro-coral-pink-case-closed-floating.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/coral-pink/pc-fit-pro-coral-pink-earbuds-inside-outside.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/coral-pink/pc-fit-pro-coral-pink-earbuds-b-logo.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/coral-pink/pc-fit-pro-coral-pink-case-open.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/coral-pink/pc-fit-pro-coral-pink-case-closed-front.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/coral-pink/pc-fit-pro-coral-pink-unboxed.jpg",
-    ],
-    color: "#f4cce4",
-    nameColor: "SunsetPink",
-  },
-  {
-    index: "3",
-    img: [
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/volt-yellow/pc-fit-pro-volt-yellow-case-closed-floating.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/volt-yellow/pc-fit-pro-volt-yellow-earbuds-inside-outside.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/volt-yellow/pc-fit-pro-volt-yellow-earbuds-b-logo.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/volt-yellow/pc-fit-pro-volt-yellow-case-open.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/volt-yellow/pc-fit-pro-volt-yellow-case-closed-front.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/volt-yellow/pc-fit-pro-volt-yellow-unboxed.jpg"
-    ],
-    color: "rgb(231, 241, 101)",
-    nameColor: "Volt Yellow",
-  },
-  {
-    index: "4",
-    img: [
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/black/pc-fit-pro-black-case-closed-floating.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/black/pc-fit-pro-black-earbuds-inside-outside.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/black/pc-fit-pro-black-earbuds-b-logo.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/black/pc-fit-pro-black-case-open.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/black/pc-fit-pro-black-case-closed-front.jpg",
-      "https://www.beatsbydre.com/content/dam/beats/web/product/earbuds/beats-fit-pro/pdp/product-carousel/black/pc-fit-pro-black-unboxed.jpg"
-    ],
-    color: "#2b2b2b",
-    nameColor: "Beats Black",
-  },
-];
 interface ImageColorProps {
   product: any;
   sendColor: any;
@@ -83,6 +29,20 @@ interface Color {
   __v: number;
 }
 
+interface SessionData {
+  json: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    verify: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+}
+
 const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
   const [selected, setSelected] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -91,6 +51,10 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
   const [selectFirst, setSelectFirst] = useState('');
   const [colorChecked, setColorChecked] = useState(product[0]?.colors[0]?.name);
   const [colorsData, setColorsData] = useState<Color[]>([]);
+  const inputRef1 = useRef<HTMLInputElement>(null);
+  const inputRef2 = useRef<HTMLInputElement>(null);
+  const inputRef3 = useRef<HTMLInputElement>(null);
+  const [form, setForm] = useState({userId: '', productId: '', quantity: ''})
 
 
   useEffect(() => {
@@ -100,6 +64,44 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
     })
   });
 
+  useEffect(() => {
+    const userId = localStorage.getItem('userId') || '';
+    const value2 = inputRef2.current?.value || '';
+    const value3 = inputRef3.current?.value || '';
+
+    setForm({
+      userId: userId,
+      productId: value2,
+      quantity: value3,
+    });
+  }, []);
+
+  
+  const handleForm = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const response = await fetch('http://localhost:5000/user/add_to_cart', {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await response.json()
+    console.log(data)
+  }
+
+
+  const [sessionData, setSessionData] = useState<SessionData | null>(null);
+
+  useEffect(() => {
+    const storedDataToken = localStorage.getItem('dataToken');
+    if (storedDataToken !== null) {
+      const parsedDataToken = JSON.parse(storedDataToken) as SessionData;
+      setSessionData(parsedDataToken);
+    } else {
+      setSessionData(null);
+    }
+  }, []);
   
 
   const goToSlide = (index: any) => setActiveIndex(index);
@@ -140,7 +142,7 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
                                       {data.images.slice(0, -1).map((img, index) => (
                                         <li role="presentation" key={index} className={`product-thumbnail ${index === activeIndex ? '    product-thumbnail--selected' : ''} `}>
                                           <button type="button" onClick={() => goToSlide(index)} >
-                                            <img src={img} alt={DataSlides[DataSlides.length - 1].nameColor} />
+                                            <img src={img} alt={colorsData[colorsData.length - 1].name} />
                                           </button>
                                         </li>
                                       ))}
@@ -283,9 +285,11 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
                           <div className="product-detail__cta">
                             <div>
                               <div className="beats-button" style={{ display: "block" }}>
-                                <form>
-                                  <input type="text" value={product[0]?._id} />
-                                  <button className='beats-btn btn-black w-full beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
+                                <form onSubmit={handleForm}>
+                                  <input type="text"  name="userId" defaultValue={form.userId} value={sessionData?.json?._id} ref={inputRef1} />
+                                  <input type="text"  name="productId" defaultValue={form.productId} value={product[0]?._id} ref={inputRef2} />
+                                  <input type="text"  name="quantity" defaultValue={form.quantity} value='1' ref={inputRef3} />
+                                  <button type="submit" className='beats-btn btn-black w-full beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
                                     <span className="beats-btn-inner">ADD TO CART</span>
                                     <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
                                   </button>

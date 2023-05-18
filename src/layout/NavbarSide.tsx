@@ -1,6 +1,6 @@
 import React from 'react'
 import { ButtonSearch, ButtonCircleIcon, ButtonWhite, ButtonBlack, ButtonTransparent, ButtonCart, ButtonWhiteBlack } from '../components/index';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios';
 import {
   Navbar,
@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Cart } from '../svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { escape } from 'querystring';
 
 interface SessionData {
@@ -29,7 +29,19 @@ interface SessionData {
 
 
 const NavbarSide = () => {
+  const navigate = useNavigate();
   const [openNav, setOpenNav] = useState(false);
+  const [sessionData, setSessionData] = useState<SessionData | null>(null);
+  const inputRef1 = useRef<HTMLInputElement>(null);
+  const [form, setForm] = useState({ userId: '' })
+
+  // useEffect(() => {
+  //   const value1 = inputRef1.current?.value || '';
+  //   setForm({
+  //     userId: value1,
+  //   });
+  // }, [form])
+
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -37,7 +49,7 @@ const NavbarSide = () => {
     );
   }, []);
 
-  const [sessionData, setSessionData] = useState<SessionData | null>(null);
+  // console.log(form)
 
   useEffect(() => {
     const storedDataToken = localStorage.getItem('dataToken');
@@ -49,8 +61,34 @@ const NavbarSide = () => {
     }
   }, []);
 
+  const [productCount, setProductCount] = useState(0);
 
-  console.log(sessionData);
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+
+    const fetchProductCount = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/user/count_cart/${userId}`, {
+          method: 'GET',
+        });
+        const data = await response.json();
+        setProductCount(data);
+      } catch (error) {
+        console.log('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch('http://localhost:5000/user/logout', {
+      method: 'GET'
+    })
+    localStorage.removeItem('dataToken');
+    localStorage.removeItem('userId');
+    navigate('')
+  }
 
   return (
     <>
@@ -164,19 +202,34 @@ const NavbarSide = () => {
             </IconButton>
           </ul>
           <div className='gr-icon m-0 max-h[80px] flex justify-end items-center gap-5 '>
+            {sessionData !== null ?
+              (<input type="text" name='userId' hidden value={sessionData.json._id} ref={inputRef1} />)
+              : (null)
+            }
             <ButtonSearch />
-            <ButtonCart
+            {/* <ButtonCart
               icon={<Cart />}
               linkTo='/cart'
-            />
+            /> */}
+                <div className="beats-button">
+                  <Link to = '/cart'>
+                    <button className='w-10 relative h-10 md:w-5 md:h-5 rounded-full flex justify-center items-center'>
+                      <Cart />
+                      <div className="inline-flex absolute -top-2 -right-2 md:w-5 md:h-5 justify-center items-center w-6 h-6 bg-red-500 rounded-full bg-interactive dark:border-gray-900">
+                        <span className='text-inverse font-bold text-[1em] md:text-[0.75em]'>{productCount}</span>
+                      </div>
+                    </button>
+                  </Link>
+                </div>
             {sessionData !== null ? (
-              <ButtonWhiteBlack title={sessionData.json.username} />
+              <form onSubmit={handleLogout}>
+                <ButtonTransparent title={`${sessionData.json.username} - Logout`} />
+              </form>
             ) : (
               <Link to="/login">
                 <ButtonWhiteBlack title="Login" />
               </Link>
             )}
-
           </div>
         </Navbar>
       </div>
