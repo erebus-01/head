@@ -6,6 +6,18 @@ const Footer = () => {
   return (
     <footer className="global-footer relative bg-inverse p-4 dark:bg-gray-900">
       <div className="footer-content section-content--reboot">
+        <p style={{fontSize: '28px', fontWeight: '800'}}>Shop's address</p>
+        <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '50px'}}>
+          <iframe
+          className="gmap_iframe"
+          style={{display: 'grid', placeItems: 'center'}}
+          width="100%"
+          height="400px"
+          frameBorder="0"
+          scrolling="no"
+          src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=Ngõ 70 P. Thái Hà, Trung Liệt, Đống Đa, Hà Nội&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+        ></iframe>
+        </div>
         <div className="flex lg_footer">
           <div className="logo">
             <Link to="/">

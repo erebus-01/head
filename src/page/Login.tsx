@@ -63,7 +63,7 @@ const Login = () => {
         }
       })
       const dataToken = await responseToken.json();
-      console.log(dataToken.json._id);
+      console.log(dataToken);
       localStorage.setItem('userId', dataToken.json._id);
       localStorage.setItem('dataToken', JSON.stringify(dataToken));
       navigate('/')

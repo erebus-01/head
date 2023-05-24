@@ -68,6 +68,8 @@ const Detail = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  console.log(products)
+
   return (
     <div id="main">
       <div className="bs3">
@@ -84,7 +86,7 @@ const Detail = () => {
           <SpecialBuild />
           <ListSpecial />
           <AllDetails />
-          <Description />
+          <Description product={products} />
           <StayUpOn />
         </div>
       </div>

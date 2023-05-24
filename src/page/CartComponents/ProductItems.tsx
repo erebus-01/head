@@ -1,6 +1,8 @@
 import axios from 'axios';
-import React, { useState, useEffect, lazy, Suspense } from 'react'
+import React, { Fragment, useState, useEffect, lazy, Suspense, useRef } from 'react'
+import { Dialog, Transition } from '@headlessui/react';
 import TotalPrice from './TotalPrice';
+import { useNavigate } from 'react-router-dom'
 
 interface ImageColorProps {
   product: any;
@@ -15,14 +17,135 @@ interface Product {
   benefit: string[];
 }
 
+interface Province {
+  Id: string;
+  Name: string;
+  Districts: District[];
+}
+
+interface District {
+  Id: string;
+  Name: string;
+  Wards: Ward[];
+}
+
+interface Ward {
+  Id: string;
+  Name: string;
+}
+
 const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
+  const natigate = useNavigate()
   const [showComponent, setShowComponent] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [showModal, setShowModal] = React.useState(false);
+  const [colors, setColors] = useState([])
+
+  const [empty, setEmpty] = useState(true);
+
+  const [open, setOpen] = useState(false)
+  const cancelButtonRef = useRef(null)
+
+  // #region address
+  
+  const price = useRef<HTMLInputElement>(null);
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<string>("");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [selectedWard, setSelectedWard] = useState<string>("");
+  const [selectedAddress, setSelectedAddress] = useState<string[]>([]);
+  const [form, setForm] = useState<Record<string, string>>({});
+
+
+
+  useEffect(() => {
+    axios.get('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json')
+      .then((response) => {
+        setProvinces(response.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    products.length == 0 ? setEmpty(true) : setEmpty(false);
+  }, [products])
+
+  useEffect(() => {
+    const total = price.current?.value || '';
+    setForm({
+      ...form,
+      price: total
+    })
+  }, [wards])
+
+  const handleForm = (e: any) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleProvinceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    const selectedProvince = provinces.find((province) => province.Id === selectedValue);
+    setDistricts(selectedProvince?.Districts || []);
+    setWards([]);
+    setSelectedProvince(selectedValue);
+    setSelectedAddress([selectedProvince?.Name ||""]);
+    setForm({
+      ...form,
+      [event.target.name]: selectedOption.text
+    });
+    event.target.options[0].text = selectedProvince?.Name || "";
+  };
+
+  const handleDistrictChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const districtId = event.target.value;
+    const selectedValue = event.target.value;
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    const selectedDistrict = districts.find((district) => district.Id === districtId);
+    setWards(selectedDistrict?.Wards || []);
+    setSelectedDistrict(selectedValue);
+    setSelectedAddress(prevState => [prevState[0], selectedDistrict?.Name || "", ""]);
+    setForm({
+      ...form,
+      [event.target.name]: selectedOption.text
+    });
+    event.target.options[0].text = selectedDistrict?.Name || "";
+  };
+
+  const handleWardChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    const selectedOption = event.target.options[event.target.selectedIndex];
+    const selectedWard = wards.find((ward) => ward.Id === selectedValue);
+    setSelectedWard(selectedValue);
+    setSelectedAddress(prevState => [prevState[0], prevState[1], selectedWard?.Name || ""]);
+    setForm({
+      ...form,
+      [event.target.name]: selectedOption.text
+    });
+    event.target.options[0].text = selectedWard?.Name || "";
+  };
+  // #endregion
+
+  useEffect(() => {
+    const delay = 500;
+
+    const timer = setTimeout(() => {
+      setShowComponent(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const productIds = product.flatMap((item: any) => item.map((product: any) => product.product));
+        const productColors = product.flatMap((item: any) => item.map((product: any) => product.color));
+        setColors(productColors)
         const fetchedProducts = [];
         for (const productId of productIds) {
           const response = await axios.get(`http://localhost:5000/auth/v1/product/${productId}`);
@@ -33,30 +156,53 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
         console.error('Error fetching products:', error);
       }
     };
-    
-    
     fetchProduct();
   }, [product]);
-    
-  const totalPrice = products.reduce((sum: Number, product: any) => sum + product.price, 0);
-  console.log(totalPrice);
 
-  useEffect(() => {
-    const delay = 2000;
 
-    const timer = setTimeout(() => {
-      setShowComponent(true);
-    }, delay);
 
-    return () => clearTimeout(timer);
-  }, []);
+  const joinedArray = products.map((item, index) => {
+    return { ...item, color: colors[index] };
+  });
+
+  let totalPrice: number = 0;
+  let fax = 0;
+  let all = 0;
+
+  if (products !== null) {
+    totalPrice = products.reduce((sum: number, product: any) => sum + product.price, 0);
+    fax = totalPrice * 0.05;
+    all = totalPrice + fax;
+  }
+  const userId = localStorage.getItem('userId');
+
+  const handleRemoveItem = async (productId: string) => {
+    const response = await fetch(`http://localhost:5000/remove_item/${userId}/${productId}`, {
+      method: 'DELETE',
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
+  const handleOrderCart = async (e: any) => {
+    e.preventDefault();
+    const response = await fetch(`http://localhost:5000/order/${userId}`, {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    window.location.reload();
+  }
 
   return (
     <>
+      {!empty ? <p style={{fontSize: '22px', marginTop: '20px', fontWeight: '700'}}>Your cart have {products.length} items</p> : <p style={{fontSize: '28px', marginTop: '20px', fontWeight: '700', textAlign: 'center'}}>Cart is EMPTY</p>}
       <ol className="rs-bag-items rs-iteminfos">
         {showComponent ? (
           <Suspense fallback={<div>Loading...</div>}>
-            {products.map((item: any, index: any) => (
+            {joinedArray.map((item: any, indexColor: number) => (
               <>
                 <li className="rs-bag-item rs-iteminfo-wrap">
                   <div className="rs-iteminfo row">
@@ -67,30 +213,20 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
                       <div className="rs-iteminfo-details">
                         <div className="rs-iteminfo-title-wrapper large-6 small-12">
                           <h2 className="rs-iteminfo-title">
-                            <a href="/shop/product/MMT73LL/A/beats-studio-buds-true-wireless-noise-cancelling-earphones-ocean-blue">{item.name}</a>
+                            <a href={`/product/detail/${item._id}`}>{item.name}</a>
                           </h2>
-                          <div className="rs-iteminfo-actions-left"></div>
-                        </div>
-                        <div className="rs-iteminfo-quantity">
-                          <div className="rs-quantity">
-                            <div className="rs-quantity-selector">
-                              <div className="rs-quantity-wrapper form-dropdown">
-                                <select className="rs-quantity-dropdown form-dropdown-select" style={{ width: '2.47059rem' }}>
-                                  <option value="1" >1</option>
-                                  <option value="2" >2</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
+                          <div className="rs-iteminfo-actions-left">Color: <span style={{ fontWeight: '700' }}>{item.color}</span></div>
                         </div>
                         <div className="rs-iteminfo-pricedetails large-last">
                           <div className="rs-iteminfo-price">
                             <p>${item.price}</p>
                           </div>
                           <div className="rs-iteminfo-actions-right">
-                            <button type="button" className="rs-iteminfo-remove as-buttonlink">
-                              Remove
-                            </button>
+                            <form onSubmit={() => handleRemoveItem(item._id)}>
+                              <button type="submit" className="rs-iteminfo-remove as-buttonlink">
+                                Remove
+                              </button>
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -140,7 +276,203 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
           <div>Loading...</div>
         )}
       </ol>
-      <TotalPrice totalPrice={totalPrice} />
+      <div className="rs-summary mt-0">
+        <div className="large-9 large-offset-3 small-12 small-offset-0">
+          <div className="rs-summary-content rs-summary-subtotal">
+            <div className="rs-summary-labelandvaluecontainer">
+              <div
+                className=""
+                data-autom="bagrs-summary-subtotallabel"
+              >
+                Subtotal
+              </div>
+              <div
+                className="rs-summary-value"
+                data-autom="bagrs-summary-subtotalvalue"
+              >
+                ${totalPrice.toFixed(2)}
+              </div>
+            </div>
+          </div>
+          <div className="rs-summary-content rs-summary-shipping">
+            <div className="rs-summary-labelandvaluecontainer">
+              <div
+                className=""
+                data-autom="bagrs-summary-shippinglabel"
+              >
+                Shipping
+              </div>
+              <div
+                className="rs-summary-value"
+                data-autom="bagrs-summary-shippingvalue"
+              >
+                FREE
+              </div>
+            </div>
+          </div>
+          <div className="rs-summary-content rs-summary-tax">
+            <div className="rs-summary-labelandvaluecontainer">
+              <div
+                className=""
+                data-autom="bagrs-summary-taxlabel"
+              >
+                <div className="rs-summary-tax">
+                  <span className="rs-summary-tax-label">
+                    Estimated tax for:{" "}
+                  </span>
+                </div>
+              </div>
+              <div
+                className="rs-summary-value"
+                data-autom="bagrs-summary-taxvalue"
+              >
+                $ {fax.toFixed(2)}
+              </div>
+            </div>
+          </div>
+          <div className="rs-summary-labelandvaluecontainer rs-summary-total">
+            <div className="font-[700_!important] uppercase">
+              Total
+            </div>
+            <div className="rs-summary-value" data-autom="bagtotalvalue">
+              ${all.toFixed(2)}
+            </div>
+          </div>
+          {!empty ? (<div className="rs-summary-content float-right flex gap-4 pt-7 button-container   ">
+            <div className="beats-button">
+              <button onClick={() => { setOpen(!open); }} type="button" className='beats-btn btn-black beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
+                <span className="beats-btn-inner">Checkout</span>
+                <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
+              </button>
+            </div>
+            <form>
+              <div className="beats-button" style={{ marginLeft: '20px' }}>
+                <button type="submit" className='beats-btn btn-light beats-btn--button beats-btn--authored font-font-secondary border_btn-white ' data-color="black" >
+                  <span className="beats-btn-inner text-text-primary">Payment online</span>
+                  <span className="beats-btn-mask btn2-bg-hover-color-black"></span>
+                </button>
+              </div>
+            </form>
+          </div>)
+          : <></>
+          }
+        </div>
+      </div>
+
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-1" initialFocus={cancelButtonRef} onClose={setOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-1 overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 bg-[rgba(0,0,0,0.5)]">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:w-[800px] bg-[#ffffff]">
+                  <form onSubmit={handleOrderCart}>
+                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                      <div className="sm:items-start">
+                        <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                          <Dialog.Title as="h3" className="text-base text-center font-semibold leading-6 text-gray-900">
+                            Your personal information and shipping address
+                          </Dialog.Title>
+                          <div className="mt-4">
+                            <p className="text-sm text-gray-500 text-center ">
+                              Fill in the information correctly and completely so that the order is delivered to you on time
+                            </p>
+                            <div className='mt-2'>
+                              <input name='price' hidden type="text" value={all.toFixed(2)} ref={price} />
+                              <input onChange={handleForm} name='name' type="text" id="name" placeholder="Enter your name" className="bg-gray-50 mt-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                              <input onChange={handleForm} name='phone' type="text" id="telephone" placeholder="Enter your phone" className="bg-gray-50 mt-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                              <input onChange={handleForm} name='address' type="text" id="address" placeholder="Enter your address" className="bg-gray-50 mt-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                              <div className='flex'>
+                                <div style={{ flex: 1 }}>
+                                  <select
+                                    name="provinces"
+                                    id="provinces"
+                                    className="bg-gray-50 mt-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    onChange={handleProvinceChange}
+                                    required
+                                  >
+                                    <option value="" disabled selected>Tỉnh Thành</option>
+                                    {provinces.map((province) => (
+                                      <option key={province.Id} value={province.Id}>{province.Name}</option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <select
+                                    name="districts"
+                                    id="districts"
+                                    className="bg-gray-50 mt-5 mx-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    onChange={handleDistrictChange}
+                                    required
+                                  >
+                                    <option value="" disabled selected>Quận huyện</option>
+                                    {districts.map((district) => (
+                                      <option key={district.Id} value={district.Id}>{district.Name}</option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <select
+                                    name="wards"
+                                    id="wards"
+                                    className="bg-gray-50 mt-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    onChange={handleWardChange}
+                                    required
+                                  >
+                                    <option value="" disabled selected>Xã phường</option>
+                                    {wards.map((ward) => (
+                                      <option key={ward.Id} value={ward.Id}>{ward.Name}</option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                      <button
+                        type="submit"
+                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                      >
+                        Order
+                      </button>
+                      <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                        onClick={() => setOpen(false)}
+                        ref={cancelButtonRef}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
     </>
   )
 }

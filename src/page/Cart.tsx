@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import StayUpOn from '../components/StayUpOn'
 import ProductItems from './CartComponents/ProductItems'
 import Title from './CartComponents/Title'
@@ -20,6 +20,9 @@ const Cart = () => {
   
   const [products, setProducts] = useState<Product[]>([]);
   
+  const [showComponent, setShowComponent] = useState(false);
+  
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -36,13 +39,30 @@ const Cart = () => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const delay = 2000;
+
+    const timer = setTimeout(() => {
+      setShowComponent(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div id="bag-container">
       <div className="rs-bag">
         <Promoba title="Fast And Free Delivery" />
         <div className="rs-bag-content as-l-container rs-zoom-content">
           <Title />
-          <ProductItems product={products} />
+          
+        {showComponent ? (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProductItems product={products} />
+          </Suspense>
+        ) : (
+          <div>Loading...</div>
+        )}
           {/* <TotalPrice /> */}
         </div>
         <StayUpOn />

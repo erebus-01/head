@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import TitleAndPrice from "./TitleAndPrice";
 import { FullScreen } from '../../svg';
+import { useNavigate } from "react-router-dom";
 
 interface ImageColorProps {
   product: any;
@@ -44,6 +45,7 @@ interface SessionData {
 }
 
 const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
+  const navigate = useNavigate()
   const [selected, setSelected] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -54,8 +56,10 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
   const inputRef3 = useRef<HTMLInputElement>(null);
-  const [form, setForm] = useState({userId: '', productId: '', quantity: ''})
+  const [form, setForm] = useState({userId: '', productId: '', color: '', quantity: ''})
 
+  
+  const checkedColor = (nameColor: any) => setColorChecked(nameColor);
 
   useEffect(() => {
     product.map((product: Product) => {
@@ -72,13 +76,15 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
     setForm({
       userId: userId,
       productId: value2,
+      color: colorChecked,
       quantity: value3,
     });
-  }, []);
+  }, [colorChecked]);
 
   
-  const handleForm = async (e: React.FormEvent) => {
+  const handleForm = async (e: any) => {
     e.preventDefault()
+    console.log(form)
     const response = await fetch('http://localhost:5000/user/add_to_cart', {
       method: 'POST',
       body: JSON.stringify(form),
@@ -88,8 +94,8 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
     })
     const data = await response.json()
     console.log(data)
+    navigate('/cart')
   }
-
 
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
 
@@ -108,7 +114,6 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
   const goToImage = (index: any) => setModalImage(index);
   const nextSlide = () => setModalImage((modalImage + 1) % 6);
   const prevSlide = () => setModalImage((modalImage - 1 + 6) % 6);
-  const checkedColor = (nameColor: any) => setColorChecked(nameColor);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
   
@@ -286,9 +291,9 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
                             <div>
                               <div className="beats-button" style={{ display: "block" }}>
                                 <form onSubmit={handleForm}>
-                                  <input type="text"  name="userId" defaultValue={form.userId} value={sessionData?.json?._id} ref={inputRef1} />
-                                  <input type="text"  name="productId" defaultValue={form.productId} value={product[0]?._id} ref={inputRef2} />
-                                  <input type="text"  name="quantity" defaultValue={form.quantity} value='1' ref={inputRef3} />
+                                  <input type="text" hidden name="userId" defaultValue={form.userId} value={sessionData?.json?._id} ref={inputRef1} />
+                                  <input type="text" hidden name="productId" defaultValue={form.productId} value={product[0]?._id} ref={inputRef2} />
+                                  <input type="text" hidden name="quantity" defaultValue={form.quantity} value='1' ref={inputRef3} />
                                   <button type="submit" className='beats-btn btn-black w-full beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
                                     <span className="beats-btn-inner">ADD TO CART</span>
                                     <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
