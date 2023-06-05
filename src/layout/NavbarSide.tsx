@@ -78,7 +78,9 @@ const NavbarSide = () => {
       }
     };
 
-    fetchProductCount();
+    if(userId != null) {
+      fetchProductCount();
+    }
   }, []);
 
   const handleLogout = async () => {

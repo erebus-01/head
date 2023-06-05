@@ -56,7 +56,8 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
   const inputRef3 = useRef<HTMLInputElement>(null);
-  const [form, setForm] = useState({userId: '', productId: '', color: '', quantity: ''})
+  const inputRef4 = useRef<HTMLInputElement>(null);
+  const [form, setForm] = useState({userId: '', productId: '', color: '', quantity: '', name: ''})
 
   
   const checkedColor = (nameColor: any) => setColorChecked(nameColor);
@@ -72,12 +73,14 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
     const userId = localStorage.getItem('userId') || '';
     const value2 = inputRef2.current?.value || '';
     const value3 = inputRef3.current?.value || '';
+    const value4 = inputRef4.current?.value || '';
 
     setForm({
       userId: userId,
       productId: value2,
       color: colorChecked,
       quantity: value3,
+      name: value4
     });
   }, [colorChecked]);
 
@@ -95,6 +98,8 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
     const data = await response.json()
     console.log(data)
     navigate('/cart')
+    
+    window.location.reload();
   }
 
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
@@ -257,9 +262,9 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
                         </div>
                       </div>
                       <div className="product-main__content">
-                        <div className="product-detail">
+                        <div className="product-detail">  
                           <div className="product-detail__price">
-                            <span className="price">${product[0]?.price}</span>
+                            <span className="price">{product[0]?.price.toLocaleString()}{"\u0111"}</span>
                           </div>
                           <div className="product-selector-el">
                             <fieldset className="product-selector new">
@@ -294,6 +299,7 @@ const ImageColor: React.FC<ImageColorProps> = ({ product, sendColor }) => {
                                   <input type="text" hidden name="userId" defaultValue={form.userId} value={sessionData?.json?._id} ref={inputRef1} />
                                   <input type="text" hidden name="productId" defaultValue={form.productId} value={product[0]?._id} ref={inputRef2} />
                                   <input type="text" hidden name="quantity" defaultValue={form.quantity} value='1' ref={inputRef3} />
+                                  <input type="text" hidden name="name" defaultValue={form.name} value={product[0]?.name} ref={inputRef4} />
                                   <button type="submit" className='beats-btn btn-black w-full beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
                                     <span className="beats-btn-inner">ADD TO CART</span>
                                     <span className="beats-btn-mask btn2-bg-hover-color-white"></span>

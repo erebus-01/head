@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { Fragment, useState, useEffect, lazy, Suspense, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import ReCAPTCHA from "react-google-recaptcha";
 import TotalPrice from './TotalPrice';
 import { useNavigate } from 'react-router-dom'
+import Paypal from '../../components/Paypal';
 
 interface ImageColorProps {
   product: any;
@@ -36,6 +39,7 @@ interface Ward {
 
 const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
   const natigate = useNavigate()
+  const [verified, setVerified] = useState(false)
   const [showComponent, setShowComponent] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [showModal, setShowModal] = React.useState(false);
@@ -47,7 +51,7 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
   const cancelButtonRef = useRef(null)
 
   // #region address
-  
+
   const price = useRef<HTMLInputElement>(null);
   const [provinces, setProvinces] = useState<Province[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
@@ -73,9 +77,11 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
 
   useEffect(() => {
     const total = price.current?.value || '';
+    const userId = localStorage.getItem('userId') || '';
     setForm({
       ...form,
-      price: total
+      price: total,
+      userId: userId
     })
   }, [wards])
 
@@ -93,7 +99,7 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
     setDistricts(selectedProvince?.Districts || []);
     setWards([]);
     setSelectedProvince(selectedValue);
-    setSelectedAddress([selectedProvince?.Name ||""]);
+    setSelectedAddress([selectedProvince?.Name || ""]);
     setForm({
       ...form,
       [event.target.name]: selectedOption.text
@@ -176,12 +182,13 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
   }
   const userId = localStorage.getItem('userId');
 
-  const handleRemoveItem = async (productId: string) => {
+  const handleRemoveItem = async (e: any, productId: string) => {
+
+    e.preventDefault();
     const response = await fetch(`http://localhost:5000/remove_item/${userId}/${productId}`, {
       method: 'DELETE',
     });
-    const data = await response.json();
-    console.log(data);
+    window.location.reload();
   };
 
   const handleOrderCart = async (e: any) => {
@@ -196,9 +203,52 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
     window.location.reload();
   }
 
+  const handlePaymentOnline = async (e: any) => {
+    e.preventDefault();
+    const userId = localStorage.getItem('userId');
+    const formData = {
+      ...form,
+      userId: userId
+    };
+
+    localStorage.setItem('Order', JSON.stringify(formData))
+    console.log(formData);
+  
+    try {
+      const response = await fetch('http://localhost:5000/create_payment_url', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const redirectUrl = await response.text();
+        const startIndex = redirectUrl.indexOf('"') + 1;
+        const endIndex = redirectUrl.lastIndexOf('"');
+        const url = redirectUrl.substring(startIndex, endIndex);
+      
+        window.location.href = url;
+      } else {
+        // Handle unsuccessful response (if needed)
+        // ...
+      }
+    } catch (error) {
+      // Handle fetch error
+      console.error(error);
+    }
+  };
+  
+  
+
+  function onChange(value: any) {
+    setVerified(true);
+  }
+
   return (
     <>
-      {!empty ? <p style={{fontSize: '22px', marginTop: '20px', fontWeight: '700'}}>Your cart have {products.length} items</p> : <p style={{fontSize: '28px', marginTop: '20px', fontWeight: '700', textAlign: 'center'}}>Cart is EMPTY</p>}
+      {!empty ? <p style={{ fontSize: '22px', marginTop: '20px', fontWeight: '700' }}>Your cart have {products.length} items</p> : <p style={{ fontSize: '28px', marginTop: '20px', fontWeight: '700', textAlign: 'center' }}>Cart is EMPTY</p>}
       <ol className="rs-bag-items rs-iteminfos">
         {showComponent ? (
           <Suspense fallback={<div>Loading...</div>}>
@@ -219,10 +269,10 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
                         </div>
                         <div className="rs-iteminfo-pricedetails large-last">
                           <div className="rs-iteminfo-price">
-                            <p>${item.price}</p>
+                            <p>{item.price.toLocaleString()}{"\u0111"}</p>
                           </div>
                           <div className="rs-iteminfo-actions-right">
-                            <form onSubmit={() => handleRemoveItem(item._id)}>
+                            <form onSubmit={(e) => handleRemoveItem(e, item._id)}>
                               <button type="submit" className="rs-iteminfo-remove as-buttonlink">
                                 Remove
                               </button>
@@ -290,7 +340,7 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
                 className="rs-summary-value"
                 data-autom="bagrs-summary-subtotalvalue"
               >
-                ${totalPrice.toFixed(2)}
+                ${totalPrice.toLocaleString()}{"\u0111"}
               </div>
             </div>
           </div>
@@ -326,7 +376,7 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
                 className="rs-summary-value"
                 data-autom="bagrs-summary-taxvalue"
               >
-                $ {fax.toFixed(2)}
+                $ {fax.toLocaleString()}{"\u0111"}
               </div>
             </div>
           </div>
@@ -335,26 +385,26 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
               Total
             </div>
             <div className="rs-summary-value" data-autom="bagtotalvalue">
-              ${all.toFixed(2)}
+              ${all.toLocaleString()}{"\u0111"}
             </div>
           </div>
-          {!empty ? (<div className="rs-summary-content float-right flex gap-4 pt-7 button-container   ">
-            <div className="beats-button">
-              <button onClick={() => { setOpen(!open); }} type="button" className='beats-btn btn-black beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
-                <span className="beats-btn-inner">Checkout</span>
-                <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
-              </button>
-            </div>
-            <form>
-              <div className="beats-button" style={{ marginLeft: '20px' }}>
-                <button type="submit" className='beats-btn btn-light beats-btn--button beats-btn--authored font-font-secondary border_btn-white ' data-color="black" >
-                  <span className="beats-btn-inner text-text-primary">Payment online</span>
-                  <span className="beats-btn-mask btn2-bg-hover-color-black"></span>
-                </button>
+          {!empty ? (
+            <>
+              <div className="rs-summary-content float-right flex gap-4 pt-7 button-container">
+                <div className="beats-button">
+                  <button onClick={() => { setOpen(!open); }} type="button" className='beats-btn btn-black beats-btn--button beats-btn--authored font-font-secondary' data-color="black">
+                    <span className="beats-btn-inner">Checkout - Payment on delivery</span>
+                    <span className="beats-btn-mask btn2-bg-hover-color-white"></span>
+                  </button>
+                </div>
               </div>
-            </form>
-          </div>)
-          : <></>
+              {/* <div className='mt-5'>
+                <Paypal product={product} />
+              </div> */}
+              <PayPalButtons />
+            </>
+          )
+            : <></>
           }
         </div>
       </div>
@@ -446,17 +496,26 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
                                 </div>
                               </div>
                             </div>
+                            <div className='mt-4'>
+                              <ReCAPTCHA
+                                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                onChange={onChange}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                       <button
+                        className="inline-flex w-full border-black justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                         type="submit"
-                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                        style={{ backgroundColor: !verified ? '#9F9FBC' : '#1790d0', color: 'white' }}
+                        disabled={!verified}
                       >
                         Order
                       </button>
+                      
                       <button
                         type="button"
                         className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
@@ -466,6 +525,16 @@ const ProductItems: React.FC<ImageColorProps> = ({ product }) => {
                         Cancel
                       </button>
                     </div>
+                  </form>
+                  <form onSubmit={handlePaymentOnline}>
+                    <button
+                      className="inline-flex w-full border-black justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                      type="submit"
+                      style={{ backgroundColor: !verified ? '#9F9FBC' : '#1790d0', color: 'white' }}
+                      disabled={!verified}
+                    >
+                      Payment Online
+                    </button>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>

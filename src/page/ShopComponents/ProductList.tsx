@@ -77,7 +77,7 @@ const ProductList = () => {
                                       </p>
                                     </div>
                                     <p className="mb-6 text-[1rem] tracking-[1.5] font-normal">
-                                      <span style={{ color: '#161616' }} className="font-bold text-[1.275em] leading-[1.14] tracking-[-0.4px]">${item.price}</span>
+                                      <span style={{ color: '#161616' }} className="font-bold text-[1.275em] leading-[1.14] tracking-[-0.4px]">{item.price.toLocaleString()}{"\u0111"}</span>
                                     </p>
                                     <ul style={{ color: '#161616' }} className="dot-li__pdp pl-[1.05em] tracking-[-0.2px] leading-[1.667] mb-[1.55em]">
                                       {item.benefit.map((li, index) => (

@@ -68,8 +68,6 @@ const Detail = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  console.log(products)
-
   return (
     <div id="main">
       <div className="bs3">

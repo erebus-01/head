@@ -5,6 +5,7 @@ import Title from './CartComponents/Title'
 import TotalPrice from './CartComponents/TotalPrice'
 import { Promoba } from '../components'
 import axios from 'axios'
+import Order from './CartComponents/Order'
 
 
 interface Product {
@@ -54,8 +55,10 @@ const Cart = () => {
       <div className="rs-bag">
         <Promoba title="Fast And Free Delivery" />
         <div className="rs-bag-content as-l-container rs-zoom-content">
-          <Title />
-          
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Title />
+            <Order />
+          </div>
         {showComponent ? (
           <Suspense fallback={<div>Loading...</div>}>
             <ProductItems product={products} />

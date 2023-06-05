@@ -7,6 +7,7 @@ import Shop from "./Shop";
 import Support from "./Support";
 import Detail from "./Detail";
 import Cart from "./Cart";
+import PaymentSuccessful from './PaymentSuccessful'
 
 export {
   Collaborations,
@@ -17,5 +18,6 @@ export {
   Shop,
   Support,
   Detail,
-  Cart
+  Cart,
+  PaymentSuccessful
 }

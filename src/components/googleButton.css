@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+.google-button {
+  background-color: #fff;
+  color: #000;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.google-button:hover {
+  background-color: #f1f1f1;
+}
+
+.google-icon {
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 20px;
+  height: 20px;
+  background: url('https://developers.google.com/identity/images/g-logo.png') center center no-repeat;
+}
